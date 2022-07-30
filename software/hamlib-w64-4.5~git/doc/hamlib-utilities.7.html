@@ -1,0 +1,658 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:53 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>HAMLIB-UTILITIES</title>
+
+</head>
+<body>
+
+<h1 align="center">HAMLIB-UTILITIES</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#rigctl">rigctl</a><br>
+<a href="#rotctl">rotctl</a><br>
+<a href="#ampctl">ampctl</a><br>
+<a href="#rigctld">rigctld</a><br>
+<a href="#rotctld">rotctld</a><br>
+<a href="#ampctl">ampctl</a><br>
+<a href="#rigmem">rigmem</a><br>
+<a href="#rigsmtr">rigsmtr</a><br>
+<a href="#rigswr">rigswr</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em">hamlib-utilties
+- radio and rotator control utilities of Hamlib</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Included with
+the Hamlib distribution are several utility programs.
+Besides providing a way for developers to test new code and
+bug fixes, the programs also offer a reference
+implementation for interfacing to the Hamlib library
+functions both through the <b>C</b> <small>API</small>
+(Application Programming Interface) and offering a network
+accessible <small>API.</small></p>
+
+<p style="margin-left:11%; margin-top: 1em">This page
+summarizes the three test programs, <b>ampctl</b>(1) for
+testing amplifier back ends, <b>rigctl</b>(1) for testing
+radio back ends, and <b>rotctl</b>(1) for testing rotator
+back ends and the three network daemons, <b>ampctld</b>(1),
+<b>rigctld</b>(1), and <b>rotcltd</b>(1) for amplifier,
+radio, and rotator access via network sockets. Also included
+are three demonstration utilities, <b>rigmem</b>(1),
+<b>rigsmtr</b>(1), and <b>rigswr</b>(1) which provide
+functional examples of how Hamlib may be used to accomplish
+various tasks.</p>
+
+<h2>rigctl
+<a name="rigctl"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigctl</b>(1)
+is the most frequently used Hamlib utility. As the other
+<i>ctl</i> utilities share many of the same characteristics,
+much of the introductory information presented in this
+section is applicable to the other utility programs.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rigctl</b> <br>
+Most likely the first of the Hamlib utility programs that is
+used is <b>rigctl</b>(1). rigctl is a character based
+interactive program and a command line program able to set
+or query a radio&rsquo;s value with a single command. rigctl
+is invoked from a shell command prompt with various options
+and additional commands.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In its most
+simple use as a <i>command line</i> program, rigctl is used
+to set frequency and mode by typing commands after any
+rigctl options:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl F
+14205000 <br>
+rigctl M USB 2400</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">and then query
+those values:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl f
+<br>
+rigctl m</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Entering
+<i>interactive mode</i> is a simple matter of not placing
+any commands after any rigctl options:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Entering
+interactive mode allows successive commands to be entered
+without exiting rigctl. Recent additions to rigctl allow
+command editing and history recall through use of the
+<a href="https://tiswww.case.edu/php/chet/readline/rltop.html">Readline</a>
+library.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Interactive
+mode is indicated by the spartan prompt:</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rig
+command:</p>
+
+<p style="margin-left:11%; margin-top: 1em">Commands are
+given at the prompt and follow the general rule that upper
+case letters set a value and lower case letters query a
+value:</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rig command:
+<b>M</b> <br>
+Mode: <b>USB</b> <br>
+Passband: <b>2500</b></p>
+
+<p style="margin-left:17%; margin-top: 1em">Rig command:
+<b>m</b> <br>
+Mode: USB <br>
+Passband: 2500</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rig
+command:</p>
+
+<p style="margin-left:11%; margin-top: 1em">An additional
+prompt is printed when more information is required by the
+command. For M above, rigctl prompted for the Mode and
+Passband values. For m above, rigctl returned the Mode and
+Passband values without further prompts. The command prompt
+is returned after each command invocation.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The above
+examples invoked rigctl without specifying a radio model.
+This is a feature where the Hamlib internal radio model 1
+<i>dummy</i> is used. The dummy radio provides a way to test
+Hamlib functions without the need for actual radio hardware.
+However, to develop the Hamlib backend capability for a
+given radio, having the actual radio connected to the
+computer is necessary for debugging.</p>
+
+<p style="margin-left:11%; margin-top: 1em">For example, to
+quickly set frequency on an Elecraft K3:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl -m
+2029 -r /dev/rig F 3900000</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">and to query
+the frequency and then mode:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl -m
+2029 -r /dev/rig f</b> <br>
+3900000</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl -m
+2029 -r /dev/rig m</b> <br>
+LSB <br>
+2000</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+the returned values do not have the prompt strings
+associated with interactive mode as shown above.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-m</b>
+option takes a numeric value that corresponds to a given
+radio back end model. The <b>-r</b> option takes the path to
+the port device on <small>POSIX</small> and the device name
+on Microsoft Windows.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: A
+complete list of supported radio models may be seen by use
+of the <b>-l</b> option:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rigctl
+-l</b> <br>
+Rig # Mfg Model Version Status <br>
+1 Hamlib Dummy 0.5 Beta <br>
+2 Hamlib NET rigctl 0.3 Beta <br>
+1001 Yaesu FT-847 0.5 Beta <br>
+1003 Yaesu FT-1000D 0.0.6 Alpha <br>
+. <br>
+. <br>
+. <br>
+27002 Rohde&amp;Schwarz EB200 0.1 Untested <br>
+28001 Philips/Simoco PRM8060 0.1 Alpha <br>
+29001 ADAT www.adat.ch ADT-200A 1.36 Beta</p>
+
+<p style="margin-left:11%; margin-top: 1em">The list is
+long so use Shift-PageUp/Shift-PageDown on Linux, ScrollLock
+then PageUp/PageDown on Free BSD, or use the scrollbar to
+the virtual terminal window (<b>cmd</b> window on Microsoft
+Windows) or the output can be piped to <b>more</b>(1) or
+<b>less</b>(1), e.g., &ldquo;rigctl -l | more&rdquo; to
+scroll back up the list. The list is sorted numerically by
+model number since Hamlib 1.2.15.1. Model numbers of a
+manufacturer/protocol family are grouped together.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigctl
+reference</b> <br>
+The complete reference for rigctl can be found in the
+<b>rigctl</b>(1) manual page.</p>
+
+<h2>rotctl
+<a name="rotctl"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Identical in
+function to <b>rigctl</b>(1), <b>rotctl</b>(1) provides a
+means for testing Hamlib functions useful for rotator
+control and QTH (Maidenhead gridsquare system, see
+<a href="https://en.wikipedia.org/wiki/Maidenhead_Locator_System">Maidenhead
+Locator System</a>) locator computations. As rotators have a
+much narrower scope than radios, there are fewer command
+line options and commands for rotctl.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rotctl <br>
+rotctl</b>(1) is a character based interactive program and a
+command line program able to set or query a rotator&rsquo;s
+value with a single command. rotctl is invoked from a shell
+command prompt with various options and additional
+commands.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In its most
+simple use as a <i>command line</i> program, rotctl is used
+to set azimuth position and (optionally) elevation by typing
+commands after any rotctl options:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rotctl P
+145.0 23.0 <br>
+rotctl M 8 25</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">and then query
+those values:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rotctl
+p</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Entering
+<i>interactive mode</i> is a simple matter of not placing
+any commands after any rotctl options:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em"><b>rotctl</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Entering
+interactive mode allows successive commands to be entered
+without exiting rotctl. Interactive mode allows for command
+editing and history recall through the use of the
+<a href="https://tiswww.case.edu/php/chet/readline/rltop.html">Readline</a>
+library.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Interactive
+mode is indicated by the spartan prompt:</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rotator
+command:</p>
+
+<p style="margin-left:11%; margin-top: 1em">Commands are
+given at the prompt:</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rotator
+command: <b>M</b> <br>
+Direction: <b>16</b> <br>
+Speed: <b>60</b></p>
+
+<p style="margin-left:17%; margin-top: 1em">Rotator
+command: <b>p</b> <br>
+Azimuth: 11.352000 <br>
+Elevation: 0.000000</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rotator
+command: <b>p</b> <br>
+Azimuth: 27.594000 <br>
+Elevation: 0.000000</p>
+
+<p style="margin-left:17%; margin-top: 1em">Rotator
+command:</p>
+
+<p style="margin-left:11%; margin-top: 1em">An additional
+prompt is printed when more information is required by the
+command. For M above, rotctl prompted for the Direction and
+Speed values. For p above, rotctl returned the Azimuth and
+Elevation values without further prompts. The command prompt
+is returned after each command invocation.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The above
+examples invoked rotctl without specifying a rotator model.
+This is a feature where the Hamlib internal rotator model 1
+<i>dummy</i> is used instead. The dummy rotator provides a
+way to test Hamlib functions without the need for actual
+rotator hardware. However, to develop back end capability
+for a given rotator, having the actual controller connected
+to the computer is necessary for debugging.</p>
+
+<p style="margin-left:11%; margin-top: 1em">For example, to
+quickly set position for RotorEZ:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rotctl -m
+401 -r /dev/rotor P 100.0 0.0</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">and to query
+the position:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rotctl -m
+401 -r /dev/rotor p</b> <br>
+100.000000 <br>
+0.000000</p>
+
+<p style="margin-left:11%; margin-top: 1em">The returned
+values do not have the prompt strings associated with
+interactive mode as shown above.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-m</b>
+option takes a numeric value that corresponds to a given
+rotator back end model. The <b>-r</b> option takes the path
+to the port device on <small>POSIX</small> or the device
+name on Microsoft Windows.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: A
+complete list of supported rotator models may be seen by use
+of the <b>-l</b> option:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>rotctl
+-l</b> <br>
+Rot # Mfg Model Version Status <br>
+1 Hamlib Dummy 0.5 Beta <br>
+2 Hamlib NET rotctl 0.3 Beta <br>
+201 Hamlib EasycommI 0.3 Beta <br>
+202 Hamlib EasycommII 0.3 Beta <br>
+. <br>
+. <br>
+. <br>
+1201 AMSAT IF-100 0.1 Untested <br>
+1301 LA7LKA ts7400 0.1 Beta <br>
+1401 Celestron NexStar 0.1 Untested</p>
+
+<p style="margin-left:11%; margin-top: 1em">The list is
+long so use Shift-PageUp/Shift-PageDown on Linux, ScrollLock
+then PageUp/PageDown on Free BSD, or use the scrollbar to
+the virtual terminal window (<b>cmd</b> window on Microsoft
+Windows) or the output can be piped to <b>more</b>(1) or
+<b>less</b>(1), e.g. &ldquo;rotctl -l | more&rdquo; to
+scroll back up the list. The list is sorted numerically by
+model number since Hamlib 1.2.15.1. Model numbers of a
+manufacturer/protocol family are grouped together.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rotctl
+reference</b> <br>
+The complete reference for rotctl can be found in the
+<b>rotctl</b>(1) manual page.</p>
+
+<h2>ampctl
+<a name="ampctl"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b>ampctl</b>(1) utility is a recent addition to the Hamlib
+utilities as a part of the 4.0 development cycle. It is
+intended to test the Hamlib implementation of amplifier
+control and is similar in function to the utilities
+previously described. See the <b>ampctl</b>(1) manual page
+for the complete reference.</p>
+
+<h2>rigctld
+<a name="rigctld"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b>rigctld</b>(1) program is a network server that accepts
+the familiar commands of <b>rigctl</b>(1) and provides the
+response data over a <small>TCP/IP</small> network socket to
+an application. In this manner an application can access a
+rigctld instance from nearly anywhere (caveat, no security
+is currently provided by rigctld). Applications using
+rigctld do not link directly to Hamlib nor use its C
+API.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rigctld <br>
+rigctld</b>(1) communicates to a client through a
+<small>TCP</small> network socket using text commands shared
+with <b>rigctl</b>(1). The protocol is simple; commands are
+sent to rigctld on one line and rigctld responds to
+<b>get</b> commands with the requested values, one per line,
+when successful, otherwise, it responds with one line
+<b>RPRT</b> <i>x</i>, where <i>x</i> is a negative number
+indicating the Hamlib error code. Commands that do not
+return values respond with the line <b>RPRT</b> <i>x</i>,
+where <i>x</i> is zero when successful, otherwise a negative
+number indicating the Hamlib error code. Each line is
+terminated with a newline, <i>\n</i>, character. This
+protocol is primarily for use by the <b>NET rigctl</b>
+(radio model 2) backend.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A separate
+Extended Response protocol extends the above behavior by
+echoing the received command string as a header, any
+returned values as a key: value pair, and the <b>RPRT</b>
+<i>x</i> string as the end of response marker which includes
+the Hamlib success or failure value. Consider using this
+protocol for clients that will interact with rigctld
+directly through a TCP network socket.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Multiple radios
+can be controlled on different TCP ports by use of multiple
+rigctld processes each listening on a unique TCP port. It is
+hoped that rigctld will be especially useful for client
+authors using languages such as
+<a href="http://www.perl.org/">Perl</a>,
+<a href="http://www.python.org/">Python</a>,
+<a href="http://php.net/">PHP</a>,
+<a href="http://www.ruby-lang.org/en/">Ruby</a>,
+<a href="http://www.tcl.tk/">TCL</a>, and others.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigctld
+reference</b> <br>
+The complete reference for rigctld can be found in the
+<b>rigctld</b>(1) manual page.</p>
+
+<h2>rotctld
+<a name="rotctld"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b>rotctld</b>(1) program is a network server that accepts
+the familiar commands of <b>rotctl</b>(1) and provides the
+response data over a TCP/IP network socket to an
+application. In this manner an application can access a
+rotctld instance from nearly anywhere (caveat, no security
+is currently provided by rotctld). Applications using
+rotctld do not link directly to Hamlib nor use its C
+API.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rotctld <br>
+rotctld</b>(1) communicates to a client through a
+<small>TCP</small> network socket using text commands shared
+with <b>rotctl</b>(1). The protocol is simple, commands are
+sent to rotctld on one line and rotctld responds to
+<b>get</b> commands with the requested values, one per line,
+when successful, otherwise, it responds with one line
+<b>RPRT</b> <i>x</i>, where <i>x</i> is a negative number
+indicating the Hamlib error code. Commands that do not
+return values respond with the line <b>RPRT</b> <i>x</i>,
+where <i>x</i> is zero when successful, otherwise a negative
+number indicating the Hamlib error code. Each line is
+terminated with a newline, <i>\n</i> character. This
+protocol is primarily for use by the <b>NET rotctl</b>
+(rotator model 2) backend.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A separate
+Extended Response protocol extends the above behavior by
+echoing the received command string as a header, any
+returned values as a key: value pair, and the <b>RPRT</b>
+<i>x</i> string as the end of response marker which includes
+the Hamlib success or failure value. Consider using this
+protocol for clients that will interact with rotctld
+directly through a TCP network socket.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Multiple
+rotators can be controlled on different TCP ports by use of
+multiple rotctld processes each listening on a unique TCP
+port. It is hoped that rotctld will be especially useful for
+client authors using languages such as
+<a href="http://www.perl.org/">Perl</a>,
+<a href="http://www.python.org/">Python</a>,
+<a href="http://php.net/">PHP</a>,
+<a href="http://www.ruby-lang.org/en/">Ruby</a>,
+<a href="http://www.tcl.tk/">TCL</a>, and others.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rotctld
+reference</b> <br>
+The complete reference for rotctld can be found in the
+<b>rotctld</b>(1) manual page.</p>
+
+<h2>ampctl
+<a name="ampctl"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b>ampctld</b>(1) utility is a recent addition to the Hamlib
+utilities as a part of the 4.0 development cycle. It
+provides network socket access for the Hamlib implementation
+of amplifier control and is similar in function to the
+network utilities previously described. See the
+<b>ampctld</b>(1) manual page for the complete
+reference.</p>
+
+<h2>rigmem
+<a name="rigmem"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigmem</b>
+may be used to backup and restore memory of radio
+transceivers and receivers.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rigmem</b> <br>
+Backup and restore memory of radio transceivers and
+receivers. <b>rigmem</b> accepts <i>command</i>s from the
+command line only.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigmem
+reference</b> <br>
+The complete reference for rigmem can be found in the
+<b>rigmem</b>(1) manual page.</p>
+
+<h2>rigsmtr
+<a name="rigsmtr"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigsmtr</b>
+uses <b>Hamlib</b> to control a radio to measure S-Meter
+value versus antenna azimuth.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rigsmtr</b> <br>
+rigsmtr rotates the antenna from minimum azimuth to maximum
+azimuth. Every second, or <i>time_step</i> if specified in
+seconds, it retrieves the signal strength. Azimuth in
+degrees and the corresponding S-Meter level in dB relative
+to S9 are then printed on <b>stdout</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To work
+correctly, rigsmtr needs a radio that could measure S-Meter
+and a Hamlib backend that is able to retrieve it, connected
+to a Hamlib supported rotator.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigsmtr
+reference</b> <br>
+The complete reference for rigsmtr can be found in the
+<b>rigsmtr</b>(1) manual page.</p>
+
+<h2>rigswr
+<a name="rigswr"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigswr</b>
+may be used to measure VSWR vs frequency.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Introduction
+to rigswr</b> <br>
+rigswr uses Hamlib to control a radio to measure VSWR
+(Voltage Standing Wave Ratio) over a frequency range.</p>
+
+<p style="margin-left:11%; margin-top: 1em">It scans
+frequencies from <i>start_freq</i> to <i>stop_freq</i> with
+an optional increment of <i>freq_step</i> (default step is
+100 kHz). All values must be entered as an integer in Hertz
+(cycles per second).</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+rigswr assumes that <i>start_freq is less than or equal to
+stop_freq</i>. If it is greater, rigswr will exit without
+doing anything.</p>
+
+<p style="margin-left:11%; margin-top: 1em">For each
+frequency, rigswr transmits at 25% of total POWER during 0.5
+second in CW mode and reads VSWR.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Frequency and
+the corresponding VSWR are then printed on stdout.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To work
+correctly, rigswr needs a radio that can measure VSWR and a
+Hamlib backend that supports reading VSWR from the
+radio.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigswr
+reference</b> <br>
+The complete reference for rigswr can be found in the
+<b>rigswr</b>(1) manual page.</p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio and rotator control functions for
+developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2001-2020 Hamlib Group (various contributors)</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>less</b>(1),
+<b>more</b>(1), <b>ampctl</b>(1), <b>ampctld</b>(1),
+<b>rigctl</b>(1), <b>rigctld</b>(1), <b>rotctl</b>(1),
+<b>rotctld</b>(1), <b>rigmem</b>(1), <b>rigsmtr</b>(1),
+<b>rigswr</b>(1), <b>hamlib</b>(7),
+<b>hamlib-primer</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

@@ -1,0 +1,332 @@
+Hamlib - (C) Frank Singleton 2000 (vk3fcs@ix.netcom.com)
+         (C) Stephane Fillod 2000-2011
+         (C) The Hamlib Group 2000-2013
+
+Why does Hamlib need beta-testers?
+==================================
+
+Hamlib is developed by a team of radio enthusiasts around the world, for
+fun, much in the spirit of ham radio. (Note that it is not restricted for
+ham usage only). There are a great deal of protocols and rigs around the
+world developers may not own. However, protocols may be available, so
+backends can be implemented, but cannot always be tested by developers.
+That's where beta-testers are so precious. On top of that, I've been told
+that there's no such sure thing like bug free code.
+
+Feedback and improvement requests are also valuable.
+
+
+Okay, you volunteer as beta-tester, how to proceed?
+===================================================
+
+First of all, you can start testing official releases. They are easier to
+test because they come in precompiled and packaged (.rpm, .deb, etc.) but
+they have the drawback of being older than the Git repository. Reports from
+these versions are still very appreciated.  Please send them to the
+hamlib-developer@lists.sourceforge.net mailing list.
+
+However, the development of Hamlib is still very active, so it's better to
+test from the latest Git version of the code.  And, depending on feedback
+you make, developers can commit a fix, so you can try out the change soon
+after, without waiting for the next official version.
+
+To proceed, you will have first to obtain either a daily snapshot or a check
+out the latest sources from the Git repository, then rebuild the Hamlib
+package and finally test it with your rig. Don't worry, it's much simpler
+than it looks, despite the size of the package.
+
+Pre-requisite:
+ - some kind of internet access
+ - POSIXish compiler toolchain (gcc, make, C library development headers,
+   etc., see README.developer for a complete list and building from a Git
+   checkout)
+
+
+So here we go:
+
+Daily Git master branch snapshots:
+==================================
+
+Download the latest Git master branch snapshot from:
+
+http://n0nb.users.sourceforge.net
+
+You'll find a tarball with a name like
+hamlib-3.0~git-30e58df-20121009.tar.gz, i.e. a check out made 09 Oct 2012
+With a Git SHA1 of 30e58df (The SHA1 is a signature of each commit.  Each is
+unique and as our project is small, the first seven characters for the full
+40 character SHA1 are likely unique.  The shorthand SHA1 is automatically
+generated and may become longer in the future.), ready for building using
+the familiar "three step" (see below).  Each morning by about 1130z a new
+snapshot is generated and uploaded and the prior day's version is removed.
+
+The advantage of the Git snapshot is that you won't need as many tools
+installed to build Hamlib as the work of the GNU Build System has already
+been done.  Most of the other packages listed below will be needed.  If you
+tell the 'configure' script to build certain parts of Hamlib like
+documentation or scripting language bindings the relevant optional packages
+will be needed.  See 'configure --help' for more information.
+
+Here is a list of development packages needed for a complete build of the
+library (Debian package names are listed, other distributions may differ):
+
+* Gnu C (gcc) or any C99 compliant compiler  # gcc --version
+* Gnu make  (or any modern one, BSD okay)    # make --version
+
+N.B. The Debian and derivatives (Ubuntu and friends) 'build-essentials'
+package will install a number of tools and minimize the number of packages
+that need to be installed manually.
+
+Optional, but highly recommended for a complete build:
+* GNU C++ (g++)                     # g++ --version
+* swig (for bindings) 1.3.14+       # swig -version
+* perl devel                        # h2xs
+* tcl devel                         # tcltk-depends
+* python devel                      # python-config
+* zlib devel                        # Needed by configure's test for Python
+* libxml2 devel                     # xml2-config --version
+* libgd2 devel                      # gdlib-config --version
+* libusb-1.0 devel                  # ver 1.0 or newer (not 0.1!)
+* libreadline devel                 # ver 5.2 or newer
+
+N.B  The libusb package is required for building most of the 'kit' backend.
+The newer version is needed, not 0.1.  Debian and derivatives
+package libusb-1.0 which is what is needed.
+
+Documentation:
+* Doxygen
+
+
+Git master branch daily snapshot build:
+=======================================
+
+Reading the INSTALL file in top directory will explain in more detail how
+to do the following commands.
+
+        ./configure [--prefix=$HOME/local]
+        make
+        make check
+        make install
+
+The prefix argument is optional.  Convention is that local packages be
+placed in /usr/local away from distribution installed packages  This is the
+default location for the snapshots so it may be disregarded unless you wish
+to install Hamlib elsewhere.  The example above would install Hamlib to
+the user's home directory under the 'local' subdirectory.
+
+Other useful options are '--with-perl-binding' or '--with-python-binding' or
+'--with-tcl-binding' if you are interested in Swig binding support for
+those scripting languages  If you are unsure it is safe to ignore these
+options.
+
+'make' will run the C and, optionally, the C++ compiler building all of the
+binary object files and finally linking all of them together to form the
+Hamlib "frontend" and "backend" libraries.
+
+The 'make check' target will run a few predetermined tests using the 'dummy'
+(rig model 1) backend and some other Hamlib functions in the build tree.
+This is a basic sanity check and cannot test all backends.
+
+The 'make install' target will require super user (root/administrator)
+privileges when installing to the system directories as a normal user.
+Some Linux distributions offer the 'sudo' command to grant temporary root
+privileges or the 'su' command to login as "root".  Consult your
+distribution's documentation.
+
+NOTE!  If Hamlib has not been previously installed as a locally built
+package you will need to make sure that 'ldconfig' is configured correctly
+and run after 'make install'.  Most modern distributions have an
+/etc/ld.so.conf.d/ directory where local configuration can be made. Later
+versions of Debian and derivatives have a file named 'libc.conf' in this
+directory.  The contents of libc.conf are:
+
+# libc default configuration
+/usr/local/lib
+
+If your system does not have such a file, one will need to be created and
+then 'ldconfig' will need to be run as the root user so that applications
+using the Hamlib libraries can find them.
+
+To delete the binary files from the source directory after compiling:
+
+        make clean
+
+To also remove the Makefiles and other build files generated by 'configure',
+along with the binary files as with 'make clean' above:
+
+        make distclean
+
+The 'configure' script will need to be run again as above.
+
+The above commands will clean things up so Hamlib can be compiled with other
+configure script options.
+
+To remove Hamlib from your system:
+
+        sudo make uninstall
+
+Note that due to a limitation in a Perl support script that if the Perl
+binding is built and installed that not all of the files under
+/usr/local/lib/perl/PERL_VERSION will not be removed.
+
+
+Git checkout:
+=============
+
+Please read the beginning of README.developer file, especially Section 1 which
+details the Git checkout, the required tools and versions (very important or
+make won't even work!), and how to use the bootstrap script.
+
+
+Structure:
+==========
+
+For the brave who want to peruse the contents, here are what all the
+subdirectories are for (these are just a sample as more are added from time to
+time):
+
+alinco,aor,icom,
+jrc,kachina,kenwood,
+pcr,tentec,uniden,
+winradio,
+yaesu,etc:          rig backends
+easycomm,rotorez,
+sartek, etc:        rotator backends
+dummy:              virtual dummy rig and rotator, for testing use.
+lib:                library for functions missing on your system
+bindings            Perl, Python, Tcl, and Visual Basic bindings
+c++:                C++ bindings
+doc:                documentation base and scripts to extract from src
+include/hamlib:     exported header files go here
+include:            non-distributed header files go there
+src:                Hamlib frontend source directory
+tests:              rigctl/rotctl and various C programs for testing
+
+
+Testing Hamlib:
+===============
+
+Don't attempt to test Hamlib from the source directory unless you're a
+developer and you understand the side effects of *not* installing freshly
+generated objects (basically having to mess with LD_LIBRARY_PATH and
+.libs).  Do an 'sudo make install' to install the libraries in the system
+area.  (You did run 'sudo ldconfig' after 'sudo make install', right?)
+
+So here we go. First of all, identify your rig model id.  Make sure
+/usr/local/bin (or the path you set --prefix to above) is in your $PATH, as
+your shell has to be able to locate rigctl.
+
+Run 'rigctl -l' to get a list of rigs supported by Hamlib.
+
+If you cannot find your radio in the list, please report to the
+hamlib-developer mailing list. The protocol manual and rig specifications
+will help us a lot.
+
+You found your rig's ID?  Good!  You're almost ready to use rigctl.
+Have a quick look at its manual page:
+
+    man rigctl
+or:
+    man -M /usr/local/man rigctl
+
+or simply:
+    rigctl --help
+
+Let's say you own an Icom IC-756:
+
+    rigctl -vvvvv -r /dev/ttyS0 -m 326
+
+The -vvvvv is very important since this will increase verbosity, and give
+precious traces to developers if something goes wrong. At this level, the
+protocol data exchanged will also be dumped to the screen.  Some backends
+produce a useful amount of data regarding function calls and critical
+variables with the -vvvv option without all the protocol data.
+
+Unless some problem shows up, you should be presented with a menu
+like "Rig command: ". Enter "?" followed by return to have the list
+of available commands. 'Q' or 'q' quits rigctl immediately.
+
+Most wanted functions to be tested are:
+'_'     get misc information on the rig
+'f'     get frequency
+'F'     set frequency, in Hz
+'m'     get mode
+'M'     set mode (AM,FM,CW,USB,etc. and passband width in Hz)
+'v'     get vfo
+'V'     set vfo (VFOA, VFOB, etc.)
+
+f,F     get_freq/set_freq       try various (<1MHz, <30Mhz and >1GHz)
+v,V     get_vfo/set_vfo         VFOA, VFOB
+m,M     get_mode/set_mode       FM, USB, LSB, CW, WFM, etc.
+                                passband is in Hz (pass 0 for default)
+G       vfo_op                  UP, DOWN
+_       get_info                should give remote Id and firmware vers
+
+NB: some functions may not be implemented in the backend or simply not
+available on this rig.
+
+When reporting to the hamlib-developer mailing list, please include traces
+and also comments to tell developers if the action performed correctly on
+the rig.
+
+Tip: Traces can be hard to cut and paste sometimes. In that case, there's a
+handy tool for you:  script(1) (the (1) is not a part of the command, rather
+it is a Unix convention telling which section of the manual it is found, in
+this case section 1, user commands.  e.g. 'man 1 script'). It will make a
+typescript of everything printed on your terminal and save it to the file
+you give it.
+
+    $ script my_rig_traces.txt
+    Script started, file is my_rig_traces.txt
+    $ rigctl -vvvvv -r /dev/ttyS0 -m 326
+    rig:rig_init called
+    rig: loading backend icom
+    icom: _init called
+    rig_register (309)
+    rig_register (326)
+    rig:rig_open called
+    Opened rig model 326, 'IC-756'
+
+    Rig command: q
+    rig:rig_close called
+    rig:rig_cleanup called
+    $ exit
+    exit
+    Script done, file is my_rig_traces.txt
+    $
+
+And then send my_rig_traces.txt to the hamlib-developer mailing list.
+
+
+Some models need S-meter calibration, because the rig only returns raw
+measurement.  It's easy, it takes only 10mn. Here's how to proceed:
+
+ 1. Fire up the rigctl program released with the Hamlib package,
+    and pass along options as needed (serial speed, etc.).
+ 2. Tune to some frequency reporting S0 to the radio S-Meter.
+ 3. At rigctl prompt, issue "get_level" ('l' in short) of the level
+    RAWSTR.
+ 4. Write down the S-level read on radio front panel, and the RAWSTR
+    value retrieved.
+ 5. Repeat from step 2 with S9 and S9+60dB. Actually the more plots,
+    the better, otherwise Hamlib does interpolation.
+ 6. Send the table to the hamlib-developer mailing list and it will be
+    added in the next release of Hamlib.
+
+NB: It is well known the S-Meter of any given radio is far from being
+accurate. For owners with a fully equipped lab, you may want to make the
+above-mentioned measurements with a good signal generator and a set of
+calibrated attenuators. Greg W8WWV has an insightful page about S-Meter
+calibration:
+
+http://www.seed-solutions.com/gregordy/Amateur%20Radio/Experimentation/SMeterBlues.htm
+
+
+Okay folks, test as much as you can, in the weirdest situations if
+possible. There is a special prize for those who find 'Segmentation fault'
+and other nasty bugs.
+
+Needless to say, patches are also very welcome (see README.developer).  :-)
+
+
+Stephane - F8CFE and The Hamlib Group

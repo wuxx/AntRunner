@@ -1,0 +1,369 @@
+This file is licensed to you under the license specified in the included file
+`COPYING'. Look there for further details.
+
+Authors of the Hamlib API, original code:
+
+ Frank Singleton and Stephane Fillod
+
+
+Contributors:
+(if any is missing, please email the current maintainer).
+For any reason, if you prefer not to appear in this list, please let me know.
+
+M: Current maintainer
+C: Contributors
+W: Web-page with status/info
+S: Status, one of the following:
+
+        Supported:      Someone is actually bothered to look after this.
+        Maintained:     Someone actually looks after it.
+        Odd Fixes:      It has a maintainer but they don't have time to do
+                        much other than throw the odd patch in. See below..
+        Orphan:         No current maintainer [but maybe you could take the
+                        role as you write your new code].
+        Obsolete:       Old code. Something tagged obsolete generally means
+                        it has been replaced by a better system and you
+                        should be using that.
+
+
+Backends:
+
+[adat: ADT-200A]
+M: Frank Goenninger DG1SBG
+
+[alinco: DX77-T]
+M: Ben Coleman NJ8J
+
+
+[aor]
+C: testing by John Ronan
+
+[aor: AR-7030]
+M: Friedrich Melchert DC9RP
+
+[aor: AR-7030 Plus]
+M: Larry Gadallah VE6VQ
+
+[aor: AR-3030]
+M: Tristan Mills
+
+[aor: AR-8200]
+M: Rob Walker
+
+
+[drake]
+M: Mark J. Fine
+
+
+[icom: ic7000]
+M: Kent Hill, AD7AI
+
+[icom: ic7200]
+M: James Watson, HZ1JW
+
+[icom: ic718]
+M: Chuck Gilkes, WD0FCL/4
+
+[icom: icr7000]
+M: Chuck Hemker, N2POR
+
+[icom: ic735]
+C: Darren Hatcher, G0WCW
+
+[icom: ic751]
+C: Lars E. Pettersson, SM6RPZ
+
+[icom: icr75]
+M: Mark J. Fine
+
+[icom: OptoScan]
+M: Michael Smith, KE4RJQ
+
+[icom]
+M: Stephane Fillod, F8CFE
+
+
+[jrc]
+M: Mark J. Fine
+C: Manual and testing by Bob Parnass, AJ9S
+
+
+[kenwood]
+M: Joop Stakenborg, PG4I
+C: Alessandro Zummo, IZ1PRB
+
+[kenwood: K2]
+M: Nate Bargmann, N0NB
+M: Brian Mury, VE7NGR
+C: Leigh Klotz, WA5ZNU
+
+[kenwood: K3]
+M: Nate Bargmann, N0NB
+C: Alexander Sack
+
+[kenwood: TS-480SAT]
+M: Juergen Rinas, DC3BW
+
+[kenwood: TS-570]
+M: Rob Frohne, KL7NA
+C: Thomas Beierlein, DL1JBE
+
+[kenwood: R-5000]
+M: Mark J. Fine
+
+[kenwood: tmd700]
+M: Charles Suprin, AA1VS
+
+[kenwood: thg71,tmv7,tmd700]
+C: Thierry Leconte, F4DWV
+
+[kenwood: thg71,tmv7]
+M: Andrew McNamara
+
+[kenwood: thd7]
+M: Stephane Fillod, F8CFE
+
+[kenwood: ts-850]
+C: Rob Frohne, KL7NA
+
+
+[kit: Si570 AVR-USB]
+C: Fabrice, F4AVI
+
+[kit: Elektor SDR]
+C: John Nogatch, AC6SL
+
+[pcr: pcr100,pcr1000]
+M: Alessandro Zummo, IZ1PRB
+C: Darren Hatcher, G0WCW
+
+
+[tentec]
+M:
+C: testing by James Chance, N3TKD
+
+[tentec: tt516]
+M: James Nykiel
+
+[tentec: tt538]
+M: Mike Markowski AB3AP
+
+[tentec: tt550]
+M: Ken Koster, N7IPB
+
+[tentec: tt565]
+M: Martin Ewing AA6E
+
+[tentec: Argonaut V]
+C: Dave Freese, W1HKJ
+
+[tentec: tt585]
+C: Bert, KG4BEC
+
+[tentec: rx331]
+M: Berndt Josef Wulf, VK5ABN
+
+
+[uniden: 245xlt]
+M: Eric Cottrell WB1HBU
+
+
+[winradio]
+M:
+C: Pascal Brisset
+
+
+[yeasu: ft1000d]
+M: Serge Pashenkov
+
+[yeasu: ft100]
+M: Alex V Flinsch, KC2IVL
+
+[yaesu: ft736]
+C: Ron Patterson, W6FM
+
+[yaesu: ft747]
+M:
+C: Chris Bryant, G3WIE
+C: Frank Singleton, VK3FCS
+
+[yaesu: ft767gx]
+M: Steve Conklin, AI4QR
+
+[yaesu: ft817]
+M: Chris Karpinsky, AA1VL
+
+[yaesu: ft847]
+M: Jim Jerzycke, KQ6EA
+C: Frank Singleton, VK3FCS
+
+[yaesu: ft920, ft890, ft900]
+M: Nate Bargmann, N0NB
+
+[yaesu: ft980]
+M: Wolfgang Buesser, DK1BW
+
+[yaesu: ft990]
+M: Berndt Josef Wulf, VK5ABN
+
+[yaesu: ft950,newcat]
+M: Terry Embry, KJ4EED
+
+[yaesu: VR-5000]
+M: Jacob Heder
+
+[yaesu: FT-600]
+C: Kārlis Millers
+
+[CM108 GPIO PTT]
+M: Andrew Errington, ZL3AME
+
+
+Rotators
+[celestron]
+M: Stephane Fillod, F8CFE
+C: Eric/N3KQX
+
+
+[easycomm]
+M: Luc Langehegermann, LX2GT
+C: Francois Retief
+
+
+[fodtrack]
+M: Luc Langehegermann, LX2GT
+
+
+[amsat/if-100]
+M: Stephane Fillod, F8CFE
+C: Patrick Strasser, OE6PSE
+
+
+[heathkit:HD 1780 Intellirotor]
+M: Rob Frohne, KL7NA
+
+
+[rotorez]
+M: Nate Bargmann, N0NB
+
+
+[spid]
+M: Norvald H. Ryeng, LA6YKA
+
+
+[m2]
+M: Magne Mæhre, LA1BFA
+C: Ron Patterson, W6FM
+
+
+[ars]
+M: Stephane Fillod, F8CFE
+C: Chris Bryant, G3WIE
+
+
+[ts7400]
+M: Øystein Hårberg, LA7LKA
+
+
+[indi]
+M: Norbert Varga, HA2NON
+
+
+[Frontend]
+M: Stephane Fillod, F8CFE
+
+
+[src/locator.c]
+M: Dave Hines, M1CXW
+C: Stephane Fillod, F8CFE
+C: Nate Bargmann, N0NB
+
+
+[test utilities]
+M: Stephane Fillod, F8CFE
+C: Nate Bargmann, N0NB
+C: Nirgal Vourgère
+
+
+[platform: FreeBSD]
+M: Diane Bruce, VA3DB
+
+[platform: NetBSD]
+M: Berndt Josef Wulf, VK5ABN
+
+[platform: win32]
+M: Stephane Fillod, F8CFE
+C: VB & testing by Darren Hatcher, G0WCW
+C: VB.NET wrapper by Michael Benz
+
+
+[packaging: debian]
+M: Kamal Mostafa, KA6MAL
+M: Jaime Robles, EA4TV
+C: Joop Stakenborg, PG4I
+
+[packaging: RPM]
+M: Alexandru Csete, OZ9AEC
+M: Joop Stakenborg, PG4I
+
+
+[Web site: http://www.hamlib.org]
+M: Joop Stakenborg, PG4I
+M: Stephane Fillod, F8CFE
+M: Nate Bargmann, N0NB
+
+
+E-mail addresses:
+
+Frank Singleton, VK3FCS, <vk3fcs (at) ix.netcom.com>
+Stephane Fillod, F8CFE, <fillods (at) users.sourceforge.net>
+Pascal Brisset <pab (at) users.sourceforge.net>
+Nate Bargmann, N0NB, <n0nb (at) arrl.net>
+Chris Karpinsky, AA1VL, <aa1vl (at) arrl.net>
+Joop Stakenborg, PG4I, <pg4i (at) amsat.org>
+Bob Parnass, AJ9S, <parnass (at) megsinet.net>
+Francois Retief, <fgretief (at) sun.ac.za>
+James Chance, N3TKD, <n3tkd (at) n3tkd.net>
+Chuck Hemker, N2POR, <n2por (at) amsat.org>
+Alex V Flinsch, KC2IVL, <avflinsch (at) verizon.net>
+Chuck Gilkes, WD0FCL/4, <chuck (at) webbasset.com>
+Dale E. Edmons, KD7ENI, <dedmons (at) comcast.net>
+Michael Smith, KE4RJQ <james.m.smith (at) earthlink.net>
+Berndt Josef Wulf, VK5ABN <wulf (at) ping.net.au>
+Mark J. Fine <mark.fine (at) fineware-swl.com>
+Jim Jerzycke, KQ6EA <kq6ea (at) amsat.org>
+Alexandru Csete OZ9AEC <alexc (at) phys.au.dk>
+Diane Bruce, VA3DB <db (at) db.net>
+Dave Hines, M1CXW, <hamlib (at) dph.fluff.org>
+Darren Hatcher, G0WCW, <g0wcw (at) hatcher.org.uk>
+Ben Coleman, NJ8J, <nj8j (at) benshome.net>
+Serge Pashenkov <serge (at) gnode.org>
+Lars E. Pettersson SM6RPZ <lars (at) homer.se>
+Thomas Beierlein, DL1JBE, <y32kn (at) users.sourceforge.net>
+Kent Hill, AD7AI, <fuzzballz (at) comcast.net>
+Dave Freese, W1HKJ, <w1hkj (at) w1hkj.com>
+Rob Frohne, KL7NA, <frohro (at) wwc.edu>
+Steve Conklin, AI4QR, <steve (at) conklinhouse.com>
+Martin Ewing, AA6E, <aa6e (at) arrl.net>
+Terry Embry, KJ4EED, <mrtembry (at) users.sourceforge.net>
+Alessandro Zummo, IZ1PRB <alessandro.zummo (at) towertech.it>
+Norvald H. Ryeng, LA6YKA <norvald (at) ryeng.name>
+Larry Gadallah, VE6VQ <lgadallah (at) gmail.com>
+Kamal Mostafa, KA6MAL, <kamal (at) whence.com>
+Jaime Robles, EA4TV, <jaime (at) debian.org>
+Wolfgang Buesser, DK1BW, <wolfgang.buesser (at) web.de>
+Magne Mæhre, LA1BFA, <magne (at) samfundet.no>
+Charles Suprin, AA1VS, <hamaa1vs (at) gmail.com>
+Robert Steinhäußer, DL1NC, <dl1nc (at) users.sourceforge.net>
+James Watson, HZ1JW, <jawatson (at) users.sourceforge.net>
+Juergen Rinas, DC3BW, <jrinas  (at) users.sourceforge.net>
+Kamal Mostafa, KA6MAL, <kamal (at) whence.com>
+Roger, <roger-linux (at) users.sourceforge.net>
+Tristan Mills, <t_mills (at) users.sourceforge.net>
+Terry Dawson, VK2KTJ, <terry (at) users.sourceforge.net>
+Øystein Hårberg, LA7LKA, <oystein.haarberg (at) netrunner.nu>
+Alexander Sack <pisymbol (at) gmail.com>
+Nirgal Vourgère <contact_hamlib (at) nirgal.com>
+Andrew Errington <a.errington (at) lancaster.ac.uk>
+Kārlis Millers YL3ALK <yl3alk (at) lrg.lv>
+Norbert Varga HA2NON <nonoo (at) nonoo.hu>

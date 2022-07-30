@@ -1,0 +1,329 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:53 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>HAMLIB</title>
+
+</head>
+<body>
+
+<h1 align="center">HAMLIB</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">hamlib - radio
+and rotator control library</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>Ham
+Radio Control Libraries</b>, <b>Hamlib</b> for short, is a
+development effort to provide a consistent interface for
+programmers wanting to incorporate radio and rotator control
+in their programs.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Hamlib is not a
+complete user application, rather, it is a software layer
+intended to make controlling various radios and other
+amateur radio station (shack) hardware much easier. Hamlib
+will allow authors of software such as logging programs,
+digital communications programs, or those wanting to develop
+the ultimate radio control software to concentrate on the
+user interface and the basic function of the program rather
+than radio control. Hamlib consists of several parts, the
+programming library, utility programs, and library
+interfaces to other programming languages.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Most recent
+amateur radio transceivers allow external control of their
+functions through a serial interface. Unfortunately, control
+commands are not always consistent across a
+manufacturer&rsquo;s product line and each
+manufacturer&rsquo;s product line differs greatly from its
+competitors.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Hamlib attempts
+to solve this problem by presenting a <i>virtual radio</i>
+to the programmer by providing an interface to actions such
+as setting a given Variable Frequency Oscillator&rsquo;s
+(VFO) frequency, setting the operating mode, querying the
+radio of its current status and settings, and giving the
+application a list of a given radio&rsquo;s capabilities.
+Unfortunately, what can be accomplished by Hamlib is limited
+by the radios themselves and some offer very limited
+capability.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Other devices,
+such as antenna rotators, can be placed into the Hamlib
+control scheme. Other recent developments include network
+interface servers and a USB interface capability. Language
+bindings are provided for <b>C</b>, <b>C++</b>, <b>Perl</b>,
+<b>Python</b>, <b>Lua</b> and <b>TCL</b> (more to come).</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Overview</b>
+<br>
+Hamlib is a <i>front end</i> library providing a <b>C</b>
+language Application Programming Interface (API) to
+programmers wishing to integrate radio or rotator control in
+their applications. Hamlib presents a <i>virtual radio</i>
+or <i>virtual rotator</i> that is a consistent interface to
+an application despite wide differences in radio and rotator
+interfaces and capabilities.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The front end
+library uses a number of <i>back end</i> libraries to
+translate from the front end to the various individual radio
+and rotator models. A back end library handles conversion of
+the front end variables to the format needed by the radio or
+rotator device it controls. The back end libraries are
+generally grouped by manufacturer and in some cases by a
+common control protocol.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Hamlib also
+provides an interface library for each of several common
+<i>scripting</i> languages such as
+<a href="http://www.perl.org"><b>Perl</b></a>,
+<a href="http://www.python.org"><b>Python</b></a>,
+<a href="https://www.lua.org"><b>Lua</b></a>, and
+<a href="http://www.tcl.tk"><b>TCL</b></a>. These language
+<i>bindings</i> are generated through the use of
+<a href="http://www.swig.org"><b>SWIG</b></a>, a
+parser/generator for multiple language interfaces to a
+<b>C</b> library. A natively generated <b>C++</b> language
+interface is also provided.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Besides the C
+and supplemental APIs, Hamlib also provides a pair of
+network daemons that provide a text command based API for
+controlling an attached radio or rotator through a
+<b>TCP</b>/<b>IP</b> network connection. The daemons then
+handle the interface to the Hamlib C API.</p>
+
+<p style="margin-left:11%; margin-top: 1em">More than one
+type of device, radio or rotator, may be controlled at a
+time, however, there is generally a limit of one device per
+serial port or other port.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Hamlib
+project information</b> <br>
+The Hamlib Project was founded by Frank Singleton,
+VK3FCS/KM5WS in July 2000. Shortly after Stephane Fillod,
+F8CFE, joined Frank on the Hamlib project and the API and
+implementation development led to a reasonable level of
+maturity in a few years. A major milestone was reached when
+Hamlib 1.2.0 was released in March 2004. The API and
+Application Binary Interface (ABI) interfaces have remained
+stable since that time up to the release of 3.3 in mid 2018.
+Version 4.0 marks a major change to the ABI and certain
+changes to the API.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Development
+continues through the major version number 4.<i>x</i> series
+and beyond. The 4.0 release marks a major change in the ABI
+with several changes for additional modes and such that will
+require client programs that use the C ABI to be
+recompiled/relinked, etc. Other goals include improving the
+overall documentation (this man page with more in progress),
+and other updates as warranted.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The Project is
+hosted by
+<a href="https://sourceforge.net">SourceForge.net</a> at the
+<a href="https://sourceforge.net/projects/hamlib/">Hamlib
+project page</a>. As <a href="https://github.com">GitHub</a>
+has become a very popular project hosting site, Hamlib also
+has a dedicated
+<a href="https://github.com/Hamlib/Hamlib">GitHub project
+page</a>. GitHub also hosts the
+<a href="http://www.hamlib.org">hamlib.org</a> Web site and
+the <a href="https://github.com/Hamlib/Hamlib/wiki">Hamlib
+Wiki</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Development
+discussion and most user support take place on the
+<a href="https://sourceforge.net/p/hamlib/mailman/">hamlib-developer
+mailing list</a>. While there are
+<a href="https://sourceforge.net/p/hamlib/discussion/">SourceForge.net
+discussion forums</a>, they are rarely used and not as
+closely read by the developers as the mailing list.</p>
+
+<p style="margin-left:11%; margin-top: 1em">For <i>source
+code management</i>, the project uses
+<a href="http://git-scm.com/"><b>Git</b></a>, a fast,
+distributed content tracker. Among its features is that
+every developer has the complete Hamlib development history
+available locally. For more information on using Git, see
+<b>hamlib-git</b>(7).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+while a canonical Git repository is hosted at SourceForge,
+its availability is not essential to continued development
+although development work flows would change temporarily.
+Several developers find the GitHub Web interface easier to
+use and lately development has centered around GitHub rather
+than SourceForge.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Applications
+using Hamlib</b> <br>
+A number of application developers have taken advantage of
+Hamlib&rsquo;s capabilities to implement radio and/or
+rotator control. While not exhaustive, a list is maintained
+at the Hamlib Wiki,
+<a href="https://github.com/Hamlib/Hamlib/wiki/Applications-and-Screen-Shots">Applications/Screenshots</a>.
+Developers are encouraged to request their applications be
+added to the gallery by way of the hamlib-developer mailing
+list.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Using Hamlib
+with your program</b> <br>
+As with other Free Software projects, Hamlib relies heavily
+on copyleft licensing to encourage development contributions
+and provide an open atmosphere for development.
+Hamlib&rsquo;s source code is released under two licenses,
+the <b>Lesser General Public License</b> (LGPL) version 2.1
+for the library portion, and the <b>General Public
+License</b> (GPL) version 2 for the utility programs.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The LGPL allows
+the library to be used (linked) by programs regardless of
+their individual license. However, any contributions to the
+library source remain under a copyleft license which means
+that the library source code may not be used in violation of
+the terms of the LGPL (see the file <b>COPYING.LIB</b> in
+the main source directory). Concepts learned by studying
+these sources for the purpose of understanding the Hamlib
+API is not covered nor prohibited by the LGPL, however,
+directly copying LGPL sources into any work that is
+incompatible with the terms of the LGPL is a violation of
+the terms of the license.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The utility
+program source files are released under the GPL. Any direct
+use of these sources must be in a form that complies with
+the terms of the GPL (see the file <b>COPYING</b> in the
+main source directory). Concepts learned by studying these
+sources for the purpose of understanding the Hamlib API is
+not covered nor prohibited by the GPL, however, directly
+copying GPL sources into any work that is incompatible with
+the terms of the GPL is a violation of the terms of the
+license.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Radios with
+a clone capability</b> <br>
+Hamlib&rsquo;s focus is on controlling radios that employ a
+port and command protocol for setting frequency, mode, VFO,
+PTT, etc. Most VHF/UHF transceivers do not employ such
+control capability but do provide for cloning the memory
+contents from radio to another of the same model. A related
+project,
+<a href="http://chirp.danplanet.com"><b>Chirp</b></a>, aims
+to support radios with such a clone capability. Please
+contact the Chirp project for support of such radios.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Pronouncing
+Hamlib</b> <br>
+English speakers seem to have two alternate pronunciations
+for our project:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p>&bull;</p></td>
+<td width="5%"></td>
+<td width="83%">
+
+
+<p>Hamlib (Ham - lib, long &rsquo;i&rsquo;, as in library.)
+IPA style: /'ham l&Atilde;&brvbar;b/</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p>&bull;</p></td>
+<td width="5%"></td>
+<td width="83%">
+
+
+<p>Hamlib (Ham - lib, short &rsquo;i&rsquo;, as in
+liberty.) IPA style: /'ham l&Eacute;&ordf;b/</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">Then again, we
+have people who say Linux &ldquo;L-eye-nux&rdquo; and those
+who say &ldquo;L-in-nux&rdquo;...</p>
+
+<p style="margin-left:11%; margin-top: 1em">If you&rsquo;re
+French, the above does not apply! :-)</p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio, rotator, and amplifier control functions
+for developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2001-2020 Hamlib Group (various contributors)</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>hamlib-primer</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

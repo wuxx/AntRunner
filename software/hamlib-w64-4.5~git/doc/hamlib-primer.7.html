@@ -1,0 +1,613 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:53 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>HAMLIB-PRIMER</title>
+
+</head>
+<body>
+
+<h1 align="center">HAMLIB-PRIMER</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">hamlib-primer -
+compiling and using the radio and rotator control
+library</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">There are
+several ways to obtain a working installation of Hamlib. The
+following sections discuss installing from a package
+manager, building from source, and installing Hamlib project
+supplied binaries on Microsoft Windows&reg;</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Installing
+binary packages on Linux and BSD</b> <br>
+The easiest way to install a released version of Hamlib on a
+Linux based distribution or a BSD variant is through the
+provided <i>package manager</i>. While package managers vary
+according to the distribution (it&rsquo;s easy to lump BSD
+variants in this group too) their end goal is to provide
+ready to use software packages. Since such a wide variety of
+package managers exist, it is best to recommend that the
+documentation for your chosen distribution be your
+guide.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>A variety of
+Hamlib sources</b> <br>
+Distribution packages are most often official Hamlib
+releases and in some cases could be quite old and lacking
+support for newer radios or rotators. In some cases support
+is improved in existing radio or rotator back ends and bugs
+are fixed in newer releases. Often times to get the improved
+support/bug fixes, building from source will be required.
+Relax, it&rsquo;s not hard. :-)</p>
+
+<p style="margin-left:11%; margin-top: 1em">Source code is
+available as official releases, testing snapshots, daily
+development snapshots, and the bleeding edge of development
+directly from the
+<a href="https://github.com/Hamlib/Hamlib">Git
+repository</a>. As a rule, even the bleeding edge tarballs
+should configure and compile without error even though
+certain implementation work may be in progress and may be
+incomplete or have errors.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Getting
+released source</b> <br>
+Official Hamlib source releases, commonly called
+<i>tarballs</i> can be found on the
+<a href="http://sourceforge.net/projects/hamlib/files/hamlib/">SourceForge.net
+Hamlib files</a> Web page. The most recent release is listed
+first.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Getting
+source snapshots</b> <br>
+Testing release candidates (RCs) are posted during the
+period (often a few weeks) before a planned release.
+Beginning with the 4.0 release, RCs are hosted by the
+<a href="http://sourceforge.net/projects/hamlib/files/hamlib/">SourceForge.net
+Hamlib files</a> Web page. RCs are identifed by having a
+<i>~rcX</i> suffix where the <i>X</i> is replace by a
+numeral for successive release candidates.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Daily snapshots
+of the development repository are available via the World
+Wide Web from
+<a href="http://n0nb.users.sourceforge.net/">Hamlib Git
+daily snapshots</a>. These are not official releases but are
+provided for testing new features and bug fixes.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The daily
+development snapshot is made and posted each day by around
+1030 UTC. Daily snapshots <i>should</i> compile but
+sometimes a bug creeps in that prevents compilation. If that
+should happen, please report it to the
+<a href="mailto:hamlib-developer@@lists.sourceforge.net">hamlib-developer
+mailing list</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Git
+repository</b> <br>
+The source repository can be <i>cloned</i> which copies the
+repository to your computer including its entire history,
+branches, and release tag information. In other words, once
+the <b>git</b>(1) <b>clone</b> command is finished a
+complete copy of the Hamlib development will be on your
+computer. You can do quite a lot with this as nothing is
+hidden from view since the entire history of Hamlib is right
+there all the way from the very first commit to the present.
+None of the meta-data is hidden away on some central
+server.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To clone the
+repository use the following command:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>git clone
+https://git.code.sf.net/p/hamlib/code hamlib</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">or:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>git clone
+https://github.com/Hamlib/Hamlib.git</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Odds are that
+you will want to run the above command in a sub directory of
+your home directory. The <i>hamlib</i> directory will be
+created by Git and the <i>master</i> branch will be checked
+out for you as the <i>working copy</i>. The master branch is
+one of several branches used in Hamlib development. It is
+the main branch of new features and bug fixes. The working
+copy will be the latest revision of every file at the time
+of the clone. Later updates from the developers will require
+using another Git command to update your local
+repository.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Building
+from source</b> <br>
+Building from source will be required for various reasons.
+Perhaps only an older release is provided by your
+distribution, or you would like to test recent changes to
+Hamlib&mdash;either a specific back end or API
+changes&mdash;and offer a report to the developers, or you
+would like to take part in development and offer your
+contribution to the project, or you would just like to learn
+how to build a relatively comprehensive package from source.
+Any is a good reason to build from the source code
+archive.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Before going
+further, this manual assumes familiarity with working from
+the command prompt in a Linux/BSD/Unix like system&rsquo;s
+<i>Bourne shell</i> environment (compatible Bourne shells
+include <b>bash</b>(1), <b>ksh</b>(1), <b>zsh</b>(1), and
+several more) either in a <i>virtual console</i> (a text
+only screen with no graphics) or in a <i>terminal</i> in a
+desktop environment (<b>xterm</b>(1), <b>rxvt</b>(1),
+<b>konsole</b>(1) (included with the KDE desktop),
+<b>gnome-terminal</b>(1), <b>xfce4-terminal</b>(1),
+<b>terminal</b>(1) (included in macOS), etc.). If this is
+new to you, take some time and read up on using the shell. A
+good tutorial can be found at
+<a href="http://linuxcommand.org/">LinuxCommand.org</a>
+which also offers an in-depth book that can be purchased or
+downloaded for no cost (the Hamlib project is not associated
+with nor has any interest in the sale of this book, it just
+looks like a very good effort on the part of its
+author).</p>
+
+<p style="margin-left:11%; margin-top: 1em">Let&rsquo;s get
+started.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Compiling
+source tarballs</b> <br>
+Before proceeding, it is essential to read the information
+in the files, <i>README</i>, <i>INSTALL</i>, and
+<i>README.betatester</i> supplied in the Hamlib
+<i>top-level</i> directory which will be named something
+like <i>hamlib-3.3~git</i> where the latter part is the
+release version. In this case the <i>3.3~git</i> indicates
+this is a development snapshot of the Git master branch.
+These files provide detailed information for compiling
+Hamlib and will vary some from release to release.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Compiling from
+a source tarball whether it is an official release or a
+testing or daily development snapshot follows the same set
+of commands, known as the <i>three step</i> which are each
+run from the top-level directory:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>./configure
+<br>
+make <br>
+sudo make install</b></p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>configure</b>
+<br>
+The <i>./</i><b>configure</b> command examines your system
+and checks it for any packages that are required or good to
+have options for compiling Hamlib. The leading <i>./</i>
+tells the shell to only run the <b>configure</b> command
+found in the current directory. It is always possible that a
+<b>configure</b> command could be lurking elsewhere and we
+don&rsquo;t want to run that!</p>
+
+<p style="margin-left:11%; margin-top: 1em">Run:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em"><b>./configure</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">from the
+top-level directory.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Some distributions are configured so commands can only be
+run from directories listed in the <b>PATH</b> environment
+variable. The <i>./</i> is necessary or the <b>configure</b>
+command will not be run as the <i>current directory</i>
+(defined as <i>.</i>) is not in the <b>PATH</b>. This is
+considered a default security feature so that only programs
+provided by the distribution are run. <b>PATH</b> can be
+modified for your own session, but that is a topic for the
+LinuxCommand.org reference above.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Of course,
+things are usually complicated a bit by options and Hamlib
+is no exception. The good news is that the defaults, i.e.,
+no options, work well in most situations. Options are needed
+to enable the compilation of certain portions of Hamlib such
+as the language bindings. Optional features usually require
+that more development tools are installed. The
+<i>INSTALL</i> and <i>README.betatester</i> files in the
+Hamlib top-level directory will have details on the options
+available for that release.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A useful option
+is <b>--prefix</b> which tells <b>configure</b> where in the
+file system hierarchy Hamlib should be installed. If it is
+not given, Hamlib will be installed in the <i>/usr/local</i>
+file system hierarchy. Perhaps you want to install to your
+home directory instead:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>./configure
+--prefix=$HOME/local</b></p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+For practice you may wish to start out using the
+<b>--prefix</b>=<i>$HOME/local</i> option to install the
+Hamlib files into your home directory and avoid overwriting
+any version of Hamlib installed into the system directories.
+The code examples in the remainder of this manual will
+assume Hamlib has been installed to <i>$HOME/local</i>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">As a result of
+this option, all of the files will be installed in the
+<i>local</i> directory of your home directory. <i>local</i>
+will be created if it does not exist during installation as
+will several other directories in it. Installing in your
+home directory means that <i>root</i>, or superuser
+(administrator) privileges are not required when running
+<b>make install</b>. On the other hand, some extra work will
+need to be done so other programs can use the library. The
+utilities that are compiled as a part of the Hamlib build
+system will work as they are <i>linked</i> to the library
+installed under <i>local</i>. Running them will require
+declaring the complete path:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em"><b>local/bin/rigctl</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">or modifying
+your shell&rsquo;s <i>PATH</i> environment variable (see the
+shell tutorial site above).</p>
+
+<p style="margin-left:11%; margin-top: 1em">Another useful
+option is <b>--help</b> which will give a few screens full
+of options for <b>configure</b>. If in a desktop environment
+the scroll bar can be used to scroll back up through the
+output. In either a terminal or a virtual console Linux
+supports the Shift-PageUp key combination to scroll back up.
+Conversely, Shift-PageDown can be used to scroll down toward
+the end of the output and the shell prompt
+(Shift-UpArrow/Shift-DownArrow may also work to scroll one
+line at a time (terminal dependent)).</p>
+
+<p style="margin-left:11%; margin-top: 1em">After a fair
+amount of time, depending on your computer, and a lot of
+screen output, <b>configure</b> will finish its job. So long
+as the few lines previous to the shell prompt don&rsquo;t
+say &ldquo;error&rdquo; or some such failure message Hamlib
+is ready to be compiled. If there is an error and all of the
+required packages listed in <i>README.betatester</i> have
+been installed, please ask for help on the
+<a href="mailto:hamlib-developer@lists.sourceforge.net">hamlib-developer
+mailing list</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>make</b>
+<br>
+The <b>make</b>(1) command is responsible for running the
+<i>compiler</i> which reads the source files and from the
+instructions it finds in them writes <i>object</i> files
+which are the binary instructions the CPU of a computer can
+execute. <b>make</b> then calls the <i>linker</i> which puts
+the object files together in the correct order to create the
+Hamlib library files and its executable programs.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Run:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em"><b>make</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">from the
+top-level directory.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Any error that
+causes <b>make</b> to stop early is cause for a question to
+the
+<a href="mailto:hamlib-developer@lists.sourceforge.net">hamlib-developer
+mailing list</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In general
+<b>make</b> will take longer than <b>configure</b> to
+complete its run. As it is a system command, and therefore
+found in the shell&rsquo;s <b>PATH</b> environment variable,
+prefixing <b>make</b> with <i>./</i> will cause a
+&ldquo;command not found&rdquo; error from the shell.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>make
+install</b> <br>
+Assuming that you have not set the installation prefix to
+your home directory, root (administrator) privileges will be
+required to install Hamlib to the system directories. Two
+popular methods exist for gaining root privileges,
+<b>su</b>(1) and <b>sudo</b>(8). <b>sudo</b> is probably the
+most popular these days, particularly when using the
+<a href="http://www.ubuntu.com">Ubuntu</a> family of
+distributions.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Run:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>sudo make
+install</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">or:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>su -l</b>
+<br>
+Password: <br>
+# <b>make install</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">as root from
+the top-level directory.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The shell session is shown to show the change in prompt from
+a normal user account to the root account.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-l</b>
+option to <b>su</b> forces a <i>login</i> shell so that
+environment variables such as <i>PATH</i> are set
+correctly.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Running <b>make
+install</b> will call the installer to put all of the newly
+compiled files and other files (such as this document) in
+predetermined places set by the <b>--prefix</b> option to
+<b>configure</b> in the directory hierarchy (yes, this is by
+design and <b>make</b> is not just flinging files any old
+place!).</p>
+
+<p style="margin-left:11%; margin-top: 1em">A lot of screen
+output will be generated. Any errors will probably be rather
+early in the process and will likely be related to your
+<i>username</i> not having write permissions in the system
+directory structure.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>ldconfig</b>
+<br>
+Once the installation is complete one more step is required
+if Hamlib has never been installed from a local build
+before. The <b>ldconfig</b> command tells the system library
+loader where to find the newly installed Hamlib libraries.
+It too will need to be run with root privileges:</p>
+
+<p style="margin-left:11%; margin-top: 1em">Run:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>sudo
+ldconfig</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">as root from
+any directory or while logged in as root from above.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Subsequent installations of Hamlib will not need to have
+<b>ldconfig</b> run after each installation if a newer
+version of Hamlib was not installed, i.e., when recompiling
+the same version during development.</p>
+
+<p style="margin-left:11%; margin-top: 1em">On some
+distributions a bit of configuration will be needed before
+<b>ldconfig</b> will add locally compiled software to its
+database. Please consult your distribution&rsquo;s
+documentation.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Bootstrapping
+from a 'git clone'</b> <br>
+Choosing to build from from a <b>git clone</b> requires a
+few more development tools (notice a theme here?) as
+detailed in <i>README.developer</i>. The most critical will
+be the GNU Autotools (<b>autoconf</b>, <b>automake</b>,
+<b>libtool</b>, and more) from which the build system
+consisting of <b>configure</b>, the various
+<i>Makefile.in</i>s throughout the directory structure, and
+the final <i>Makefile</i>s are generated.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In the
+top-level directory is the <b>bootstrap</b> script from
+which the build system is <i>bootsrapped&mdash;the</i>
+process of generating the Hamlib build system from
+<i>configure.ac</i> and the various <i>Makefile.am</i>s. At
+its completion the <b>configure</b> script will be present
+to configure the build system.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Next
+<b>configure</b> is run with any needed build options
+(<b>configure --help</b> is useful) to enable certain
+features or provide paths for locating needed build
+dependencies, etc. Environment variables intended for the
+preprocessor and/or compiler may also be set on the
+<b>configure</b> command line.</p>
+
+<p style="margin-left:11%; margin-top: 1em">After the
+configuration is complete, the build may proceed with the
+<b>make</b> step as for the source tarballs above. Or
+<b>configure --help</b> may be run, and <b>configure</b> run
+again with specific options in which case the
+<i>Makefile</i>s will be regenerated and the build can
+proceed with the new configuration.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Other make
+targets</b> <br>
+Besides <b>make install</b>, other <i>targets</i> exist when
+running <b>make</b>. Running <b>make clean</b> from the
+top-level directory removes all of the generated object and
+executable files generated by running <b>make</b> freeing up
+considerable disk space.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+During development of individual source files, it is not
+necessary to run <b>make clean</b> each time before
+<b>make</b>. Simply run <b>make</b> and only the modified
+file(s) and any objects that depend on them will be
+recompiled. This speeds up development time
+considerably.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To remove even
+the generated <i>Makefile</i>s, run <b>make distclean</b>
+from the top-level directory. After this target is run,
+<b>configure</b> will need to be run again to regenerate the
+<i>Makefile</i>s. This command may not be as useful as the
+<i>Makefile</i>s do not take up much space, however it can
+be useful for rebuilding the <i>Makefile</i>s when modifying
+a <i>Makefile.am</i> or <i>confgure.ac</i> during build
+system development.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Parallel
+build trees</b> <br>
+One feature of the GNU build system used by Hamlib is that
+the object files can be kept in a directory structure
+separate from the source files. While this has no effect on
+the <b>make</b> targets described above, it does help the
+developer find files in the source tree! One such way of
+using parallel builds is described in
+<i>README.developer</i>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Parallel builds
+can be very useful as one build directory can be configured
+for a release and another build directory can be configured
+for debugging with different options passed to
+<b>configure</b> from each directory. The generated
+<i>Makefile</i>s are unique to each build directory and will
+not interfere with each other.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Adding
+debugging symbols</b> <br>
+When additional debugging symbols are needed with, for
+example, the GNU Debugger, <b>gdb</b>, the needed compiler
+and linker options are passed as environment variables.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Run:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em"><b>../hamlib/configure
+CFLAGS=&quot;-ggdb3 -O0&quot; CXXFLAGS=&quot;-ggdb3
+-O0&quot;</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">from a sibling
+build directory intended for a debugging build.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b>-ggdb3</b> option tells the C compiler, in this case the
+GNU C Compiler, <b>gcc</b>, to add special symbols useful
+for GDB, the GNU debugger. The <b>-O0</b> option tells
+<b>gcc</b> to turn off all optimizations which will make it
+easier to follow some variables that might otherwise be
+optimized away. <b>CFLAGS</b> and <b>CXXFLAGS</b> may be set
+independently for each compiler.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+There are a number compiler options available for
+controlling debugging symbols and setting optimization
+levels. Please consult the compiler&rsquo;s manual for all
+the details.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Compiling
+for Microsoft Windows</b> <br>
+Currently compiling is done on a Debian 10 (Buster) virtual
+machine using <a href="http://www.mingw.org">MinGW</a>.
+<i>README.build-win32</i> in the <i>scripts</i> directory
+has details on how this is accomplished.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Pre-compiled
+binaries for Microsoft Windows</b> <br>
+Pre-compiled binaries for Microsoft Windows 32 and 64 bit
+architectures (Windows NT and newer) are available for both
+official releases and daily development snapshots.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Official
+releases are available through the
+<a href="http://sourceforge.net/projects/hamlib/files/hamlib/">SourceForge.net
+file download service</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Daily
+development snapshots are available from the
+<a href="http://n0nb.users.sourceforge.net/">daily snapshots
+page</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Beginning with
+the Hamlib 1.2.15.3 release a self-extracting installer is
+available. Among its features are selecting which portions
+of Hamlib are installed. The <i>PATH</i> environment
+variable will need to be set manually per the included
+<i>README.w32-bin</i> or <i>README.w64-bin</i> file.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Daily
+development snapshots feature both a .ZIP archive and the
+self extracting installer.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Bug reports and
+questions about these archives should be sent to the
+<a href="mailto:hamlib-developer@lists.sourceforge.net">hamlib-developer
+mailing list</a>.</p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio and rotator control functions for
+developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2001-2020 Hamlib Group (various contributors)</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>git</b>(1),
+<b>hamlib</b>(7), <b>ldconfig</b>(8), <b>make</b>(1),
+<b>su</b>(1), <b>sudo</b>(8)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

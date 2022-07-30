@@ -1,0 +1,899 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:53 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>ROTCTL</title>
+
+</head>
+<body>
+
+<h1 align="center">ROTCTL</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#COMMANDS">COMMANDS</a><br>
+<a href="#READLINE">READLINE</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#EXIT STATUS">EXIT STATUS</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">rotctl -
+control antenna rotators</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em"><b>rotctl</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">[<b>-hiIlLuV</b>]
+[<b>-m&nbsp;</b><i>id</i>] [<b>-r&nbsp;</b><i>device</i>]
+[<b>-R&nbsp;</b><i>device2</i>] [<b>-s&nbsp;</b><i>baud</i>]
+[<b>-t&nbsp;</b><i>char</i>]
+[<b>-C&nbsp;</b><i>parm=val</i>] [<b>-v</b>[<b>-Z</b>]]
+[<b>command</b>|<b>-</b>]</p> </td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Control antenna
+rotators.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rotctl</b>
+accepts <i>commands</i> from the command line as well as in
+interactive mode if none are provided on the command
+line.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Keep in mind
+that Hamlib is BETA level software. While a lot of backend
+libraries lack complete rotator support, the basic functions
+are usually well supported.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Please report
+bugs and provide feedback at the e-mail address given in the
+<b>BUGS</b> section below. Patches and code enhancements
+sent to the same address are welcome.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This program
+follows the usual GNU command line syntax. Short options
+that take an argument may have the value follow immediately
+or be separated by a space. Long options starting with two
+dashes (&rsquo;-&rsquo;) require an &rsquo;=&rsquo; between
+the option and any argument.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is a
+summary of the supported options: <b><br>
+-m</b>, <b>--model</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Select rotator model
+number.</p>
+
+<p style="margin-left:22%; margin-top: 1em">See model list
+(use &ldquo;rotctl -l&rdquo;).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+<b>rotctl</b> (or third party software using the C API) will
+use rotator model 2 for <b>NET rotctl</b> (communicating
+with <b>rotctld</b>).</p>
+
+<p style="margin-left:11%;"><b>-r</b>,
+<b>--rot-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:11%;"><b>-R</b>,
+<b>--rot-file2</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the 2nd rotator. e.g. 2nd
+rotator used for elevation.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:11%;"><b>-s</b>,
+<b>--serial-speed</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set serial speed to <i>baud</i>
+rate.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from rotator backend capabilities as the
+default.</p>
+
+<p style="margin-left:11%;"><b>-t</b>,
+<b>--send-cmd-term</b>=<i>char</i></p>
+
+<p style="margin-left:22%;">Change the termination
+<i>char</i> for text protocol when using the <b>send_cmd</b>
+command.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The default
+value is ASCII CR (&rsquo;0x0D&rsquo;). ASCII non-printing
+characters can be given as the ASCII number in hexadecimal
+format prepended with &ldquo;0x&rdquo;. You may pass an
+empty string for no termination char. The string
+&ldquo;-1&rdquo; tells <b>rotctl</b> to switch to binary
+protocol. See the <b>send_cmd</b> command for further
+explanation.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The semicolon (&rsquo;;&rsquo;) is a common terminator for
+rotators that accept ASCII character strings.</p>
+
+<p style="margin-left:11%;"><b>-L</b>,
+<b>--show-conf</b></p>
+
+<p style="margin-left:22%;">List all configuration
+parameters for the rotator defined with <b>-m</b> above.</p>
+
+<p style="margin-left:11%;"><b>-C</b>,
+<b>--set-conf</b>=<i>parm=val</i>[<i>,parm=val</i>]</p>
+
+<p style="margin-left:22%;">Set rotator configuration
+parameter(s), e.g. <i>stop_bits=2</i>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use the
+<b>-L</b> option above for a list of configuration
+parameters for a given model number.</p>
+
+<p style="margin-left:11%;"><b>-u</b>,
+<b>--dump-caps</b></p>
+
+<p style="margin-left:22%;">Dump capabilities for the
+rotator defined with <b>-m</b> above and exit.</p>
+
+<p style="margin-left:11%;"><b>-l</b>, <b>--list</b></p>
+
+<p style="margin-left:22%;">List all rotator model numbers
+defined in <b>Hamlib</b> and exit.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The list is
+sorted by model number.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: In
+Linux the list can be scrolled back using
+<b>Shift-PageUp</b>/<b>Shift-PageDown</b>, or using the
+scrollbars of a virtual terminal in X or the cmd window in
+Windows. The output can be piped to <b>more</b>(1) or
+<b>less</b>(1), e.g. &ldquo;rotctl -l | more&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>-i</b>,
+<b>--read-history</b></p>
+
+<p style="margin-left:22%;">Read previously saved command
+and argument history from a file (default
+<i>$HOME/.rotctl_history</i>) for the current session.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Available when
+<b>rotctl</b> is built with Readline support (see
+<b>READLINE</b> below).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: To
+read a history file stored in another directory, set the
+<b>ROTCTL_HIST_DIR</b> environment variable, e.g.
+&ldquo;ROTCTL_HIST_DIR=$HOME/tmp rotctl -i&rdquo;. When
+ROTCTL_HIST_DIR is not set, the value of <b>HOME</b> is
+used.</p>
+
+<p style="margin-left:11%;"><b>-I</b>,
+<b>--save-history</b></p>
+
+<p style="margin-left:22%;">Write current session (and any
+previous session(s), if <b>-i</b> option is also given)
+command and argument history to a file (default
+<i>$HOME/.rotctl_history</i>) at the end of the current
+session.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Complete
+commands with arguments are saved as a single line to be
+recalled and used or edited. Available when <b>rotctl</b> is
+built with Readline support (see <b>READLINE</b> below).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: To
+write a history file in another directory, set the
+<b>ROTCTL_HIST_DIR</b> environment variable, e.g.
+&ldquo;ROTCTL_HIST_DIR=$HOME/tmp rotctl -I&rdquo;. When
+ROTCTL_HIST_DIR is not set, the value of <b>HOME</b> is
+used.</p>
+
+<p style="margin-left:11%;"><b>-v</b>, <b>--verbose</b></p>
+
+<p style="margin-left:22%;">Set verbose mode, cumulative
+(see <b>DIAGNOSTICS</b> below).</p>
+
+<p style="margin-left:11%;"><b>-Z</b>,
+<b>--debug-time-stamps</b></p>
+
+<p style="margin-left:22%;">Enable time stamps for the
+debug messages.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use only in
+combination with the <b>-v</b> option as it generates no
+output on its own.</p>
+
+<p style="margin-left:11%;"><b>-h</b>, <b>--help</b></p>
+
+<p style="margin-left:22%;">Show a summary of these options
+and exit.</p>
+
+<p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
+
+<p style="margin-left:22%;">Show version of <b>rotctl</b>
+and exit.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>-</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>Stop option processing and read commands from standard
+input.</p> </td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">See <b>Standard
+Input</b> below.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Some options may not be implemented by a given backend and
+will return an error. This is most likely to occur with the
+<b>--set-conf</b> and <b>--show-conf</b> options.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Be aware that
+the backend for the rotator to be controlled, or the rotator
+itself may not support some commands. In that case, the
+operation will fail with a <b>Hamlib</b> error code.</p>
+
+<h2>COMMANDS
+<a name="COMMANDS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Commands can be
+entered either as a single char, or as a long command name.
+The commands are not prefixed with a dash as the options
+are. They may be typed in when in interactive mode or
+provided as argument(s) in command line interface mode. In
+interactive mode commands and their arguments may be entered
+on a single line (typed text shown in bold):</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>P 123
+45</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Since most of
+the <b>Hamlib</b> operations have a <b>set</b> and a
+<b>get</b> method, an upper case letter will often be used
+for a <b>set</b> method whereas the corresponding lower case
+letter refers to the <b>get</b> method. Each operation also
+has a long name; in interactive mode, prepend a backslash,
+&rsquo;\&rsquo;, to enter a long command name.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Example: Use
+&ldquo;\get_info&rdquo; in interactive mode to see the
+rotator&rsquo;s information.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The backend for the rotator to be controlled, or the rotator
+itself may not support some commands. In that case, the
+operation will fail with a <b>Hamlib</b> error message.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Standard
+Input</b> <br>
+As an alternative to the <b>READLINE</b> interactive command
+entry or a single command for each run, <b>rotctl</b>
+features a special option where a single dash
+(&rsquo;-&rsquo;) may be used to read commands from standard
+input (<b>stdin</b>). Commands must be separated by
+whitespace similar to the commands given on the command
+line. Comments may be added using the &rsquo;#&rsquo;
+character, all text up until the end of the current line
+including the &rsquo;#&rsquo; character is ignored.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A simple
+example:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>cat
+&lt;&lt;.EOF. &gt;cmds.txt</b> <br>
+&gt; <b># File of commands</b></p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="17%"></td>
+<td width="-9%">
+
+
+<p>&gt; <b>set_pos 180.0 10.0</b></p></td>
+<td width="30%"></td>
+<td width="8%"></td>
+<td width="54%">
+
+
+<p><b># rotate</b></p></td></tr>
+</table>
+
+<p style="margin-left:17%;">&gt; <b>pause 30 # wait for
+action to complete</b> <br>
+&gt; <b>get_pos # query rotator</b> <br>
+&gt;<b>.EOF.</b></p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rotctl -m
+1 - &lt;cmds.txt</b></p>
+
+<p style="margin-left:17%; margin-top: 1em">set_pos 180.0
+10.0 <br>
+pause 30 <br>
+get_pos 180.000000 <br>
+10.000000</p>
+
+<p style="margin-left:17%; margin-top: 1em">$</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Rotator
+Commands</b> <br>
+A summary of commands is included below (In the case of
+<b>set</b> commands the quoted italicized string is replaced
+by the value in the description. In the case of <b>get</b>
+commands the quoted italicized string is the key name of the
+value returned.): <b><br>
+Q</b>|<b>q</b>, exit rotctl</p>
+
+<p style="margin-left:22%;">Exit rotctl in interactive
+mode.</p>
+
+<p style="margin-left:22%; margin-top: 1em">When rotctl is
+controlling the rotator directly, will close the rotator
+backend and port. When rotctl is connected to rotctld
+(rotator model 2), the TCP/IP connection to rotctld is
+closed and rotctld remains running, available for another
+TCP/IP network connection.</p>
+
+<p style="margin-left:11%;"><b>P</b>, <b>set_pos</b>
+'<i>Azimuth</i>' '<i>Elevation</i>'</p>
+
+<p style="margin-left:22%;">Set position.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Azimuth</i>'
+and '<i>Elevation</i>' are floating point values.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Azimuth can be
+-180 to 540 depending on the rotator to allow for rotators
+facing south and the capabilities of the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Elevation can
+be -20 to 210 depending on the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For
+example:</p>
+
+<p style="margin-left:28%; margin-top: 1em"><b>P 163.0
+41.0</b></p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: If
+the rotator does not support setting elevation (most do not)
+supply &ldquo;0.0&rdquo; for '<i>Elevation</i>'.</p>
+
+<p style="margin-left:11%;"><b>p</b>, <b>get_pos</b></p>
+
+<p style="margin-left:22%;">Get position.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Azimuth</i>'
+and '<i>Elevation</i>' are returned as double precision
+floating point values.</p>
+
+<p style="margin-left:11%;"><b>M</b>, <b>move</b>
+'<i>Direction</i>' '<i>Speed</i>'</p>
+
+<p style="margin-left:22%;">Move the rotator in a specific
+direction at the given rate.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Direction</i>'
+is an integer or keyword defined as &rsquo;2&rsquo; = UP,
+&rsquo;4&rsquo; = DOWN, &rsquo;8&rsquo; = LEFT or CCW and
+&rsquo;16&rsquo; = RIGHT or CW</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Speed</i>'
+is an integer between 1 and 100. Use -1 for no change to
+current speed.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Not all backends that implement the move command use the
+Speed value.</p>
+
+<p style="margin-left:11%;"><b>S</b>, <b>stop</b></p>
+
+<p style="margin-left:22%;">Stop the rotator.</p>
+
+<p style="margin-left:11%;"><b>K</b>, <b>park</b></p>
+
+<p style="margin-left:22%;">Park the rotator.</p>
+
+<p style="margin-left:11%;"><b>C</b>, <b>set_conf</b>
+'<i>Token</i>' '<i>Value</i>'</p>
+
+<p style="margin-left:22%;">Set a configuration
+parameter.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Token</i>'
+is a string; see the <b>-C</b> option and the <b>-L</b>
+output.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Value</i>'
+is a string of up to 20 characters.</p>
+
+<p style="margin-left:11%;"><b>R</b>, <b>reset</b>
+'<i>Reset</i>'</p>
+
+<p style="margin-left:22%;">Reset the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Reset</i>'
+accepts an integer value of &rsquo;1&rsquo; for &ldquo;Reset
+All&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>_</b>, <b>get_info</b></p>
+
+<p style="margin-left:22%;">Get miscellaneous information
+about the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Returns
+'<i>Info</i>' &ldquo;Model Name&rdquo; at present.</p>
+
+<p style="margin-left:11%;"><b>dump_state</b></p>
+
+<p style="margin-left:22%;">Return certain state
+information about the rotator backend.</p>
+
+<p style="margin-left:11%;"><b>1</b>, <b>dump_caps</b></p>
+
+<p style="margin-left:22%;">Not a real rot remote command,
+it just dumps capabilities, i.e. what the backend knows
+about this model, and what it can do.</p>
+
+<p style="margin-left:11%;"><b>w</b>, <b>send_cmd</b>
+'<i>Cmd</i>'</p>
+
+<p style="margin-left:22%;">Send a raw command string to
+the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">ASCII CR (or
+<b>--send-cmd-term</b> value, see <b>-t</b> option) is
+appended automatically at the end of the command for text
+protocols. For binary protocols, enter hexadecimal values as
+&ldquo;\0xAA\0xBB&rdquo;.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Locator
+Commands</b> <br>
+These commands offer conversions of Degrees Minutes Seconds
+to other formats, <b>Maidenhead</b> square locator
+conversions and distance and azimuth conversions. <b><br>
+L</b>, <b>lonlat2loc</b> '<i>Longitude</i>'
+'<i>Latitude</i>' '<i>Loc Len</i>'</p>
+
+<p style="margin-left:22%;">Returns the <b>Maidenhead</b>
+'<i>Locator</i>' for the given '<i>Longitude</i>' and
+'<i>Latitude</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Floating point
+values are supplied. The precision of the returned square is
+controlled by '<i>Loc Len</i>' which should be an even
+numbered integer value between 2 and 12.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For
+example:</p>
+
+<p style="margin-left:28%; margin-top: 1em"><b>L -170.0
+-85.0 12</b></p>
+
+<p style="margin-left:22%; margin-top: 1em">returns:</p>
+
+<p style="margin-left:28%; margin-top: 1em">Locator:
+AA55AA00AA00</p>
+
+<p style="margin-left:11%;"><b>l</b>, <b>loc2lonlat</b>
+'<i>Locator</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Longitude</i>' and
+'<i>Latitude</i>' in decimal degrees at the approximate
+center of the requested <b>Maidenhead</b> grid square.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Locator</i>'
+can be from 2 to 12 characters in length.</p>
+
+<p style="margin-left:22%; margin-top: 1em">West longitude
+is expressed as a negative value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">South latitude
+is expressed as a negative value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For
+example:</p>
+
+<p style="margin-left:28%; margin-top: 1em"><b>l
+AA55AA00AA00</b></p>
+
+<p style="margin-left:22%; margin-top: 1em">returns:</p>
+
+<p style="margin-left:28%; margin-top: 1em">Longitude:
+-169.999983 Latitude: -84.999991</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Despite the use of double precision variables internally,
+some rounding error occurs.</p>
+
+<p style="margin-left:11%;"><b>D</b>, <b>dms2dec</b>
+'<i>Degrees</i>' '<i>Minutes</i>' '<i>Seconds</i>'
+'<i>S/W</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Dec Degrees</i>', a
+signed floating point value.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Degrees</i>'
+and '<i>Minutes</i>' are integer values.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Seconds</i>'
+is a floating point value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>S/W</i>' is
+a flag with &rsquo;1&rsquo; indicating South latitude or
+West longitude and &rsquo;0&rsquo; North or East (the flag
+is needed as computers don&rsquo;t recognize a signed zero
+even though only the '<i>Degrees</i>' value is typically
+signed in DMS notation).</p>
+
+<p style="margin-left:11%;"><b>d</b>, <b>dec2dms</b>
+'<i>Dec Degrees</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Degrees</i>'
+'<i>Minutes</i>' '<i>Seconds</i>' '<i>S/W</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Values are as
+in <b>dms2dec</b> above.</p>
+
+<p style="margin-left:11%;"><b>E</b>, <b>dmmm2dec</b>
+'<i>Degrees</i>' '<i>Dec Minutes</i>' '<i>S/W</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Dec Degrees</i>', a
+signed floating point value.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Degrees</i>'
+is an integer value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Dec
+Minutes</i>' is a floating point value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>S/W</i>' is
+a flag as in <b>dms2dec</b> above.</p>
+
+<p style="margin-left:11%;"><b>e</b>, <b>dec2dmmm</b>
+'<i>Dec Deg</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Degrees</i>'
+'<i>Minutes</i>' '<i>S/W</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Values are as
+in <b>dmmm2dec</b> above.</p>
+
+<p style="margin-left:11%;"><b>B</b>, <b>qrb</b> '<i>Lon
+1</i>' '<i>Lat 1</i>' '<i>Lon 2</i>' '<i>Lat 2</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Distance</i>' and
+'<i>Azimuth</i>'.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Distance</i>'
+is in km.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Azimuth</i>'
+is in degrees.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Supplied
+<i>Lon</i>/<i>Lat</i> values are signed floating point
+numbers.</p>
+
+<p style="margin-left:11%;"><b>A</b>, <b>a_sp2a_lp</b>
+'<i>Short Path Deg</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Long Path
+Deg</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Both the
+supplied argument and returned value are floating point
+values within the range of 0.00 to 360.00.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Supplying a negative value will return an error message.</p>
+
+<p style="margin-left:11%;"><b>a</b>, <b>d_sp2d_lp</b>
+'<i>Short Path km</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Long Path
+km</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Both the
+supplied argument and returned value are floating point
+values.</p>
+
+<p style="margin-left:11%;"><b>pause</b>
+'<i>Seconds</i>'</p>
+
+<p style="margin-left:22%;">Pause for the given whole
+(integer) number of '<i>Seconds</i>' before sending the next
+command to the rotator.</p>
+
+<h2>READLINE
+<a name="READLINE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">If
+<b>Readline</b> library development files are found at
+configure time, <b>rotctl</b> will be conditonally built
+with Readline support for command and argument entry.
+Readline command key bindings are at their defaults as
+described in the
+<a href="https://tiswww.cwru.edu/php/chet/readline/rluserman.html">Readline
+manual</a>. <b>rotctl</b> sets the name &ldquo;rotctl&rdquo;
+which can be used in Conditional Init Constructs in the
+Readline Init File (<i>$HOME/.inputrc</i> by default) for
+custom keybindings unique to <b>rotctl</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Command history
+is available with Readline support as described in the
+<a href="https://tiswww.case.edu/php/chet/readline/history.html#SEC1">Readline
+History manual</a>. Command and argument strings are stored
+as single lines even when arguments are prompted for input
+individually. Commands and arguments are not validated and
+are stored as typed with values separated by a single
+space.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Normally
+session history is not saved, however, use of either of the
+<b>-i</b>/<b>--read-history</b> or
+<b>-I</b>/<b>--save-history</b> options when starting
+<b>rotctl</b> will cause any previously saved history to be
+read in and/or the current and any previous session history
+(assuming the <b>-i</b> and <b>-I</b> options are given
+together) will be written out when <b>rotctl</b> is closed.
+Each option is mutually exclusive, i.e. either may be given
+separately or in combination. This is useful to save a set
+of commands and then read them later but not write the
+modified history for a consistent set of test commands in
+interactive mode, for example.</p>
+
+<p style="margin-left:11%; margin-top: 1em">History is
+stored in <i>$HOME/.rotctl_history</i> by default although
+the destination directory may be changed by setting the
+<b>ROTCTL_HIST_DIR</b> environment variable. When
+ROTCTL_HIST_DIR is unset, the value of the <b>HOME</b>
+environment variable is used instead. Only the destination
+directory may be changed at this time.</p>
+
+<p style="margin-left:11%; margin-top: 1em">If Readline
+support is not found at configure time the original internal
+command handler is used. Readline is not used for
+<b>rotctl</b> commands entered on the command line
+regardless if Readline support is built in or not.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Readline support is not included in the MS Windows 32 or 64
+bit binary builds supplied by the Hamlib Project. Running
+<b>rotctl</b> on the MS Windows platform in the
+&rsquo;cmd&rsquo; shell does give session command line
+history, however, it is not saved to disk between
+sessions.</p>
+
+<h2>DIAGNOSTICS
+<a name="DIAGNOSTICS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-v</b>,
+<b>--verbose</b> option allows different levels of
+diagnostics to be output to <b>stderr</b> and correspond to
+-v for <b>BUG</b>, -vv for <b>ERR</b>, -vvv for <b>WARN</b>,
+-vvvv for <b>VERBOSE</b>, or -vvvvv for <b>TRACE</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A given verbose
+level is useful for providing needed debugging information
+to the email address below. For example, TRACE output shows
+all of the values sent to and received from the radio which
+is very useful for radio backend library development and may
+be requested by the developers.</p>
+
+<h2>EXIT STATUS
+<a name="EXIT STATUS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rotctl</b>
+exits with:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>0</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if all operations completed normally;</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>1</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if there was an invalid command line option or
+argument;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>2</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if an error was returned by <b>Hamlib</b>.</p></td></tr>
+</table>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>rotctl</b> for RotorEZ using the first serial port on
+Linux:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rotctl -m
+401 -r /dev/ttyS0</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>rotctl</b> for RotorEZ using COM2 on MS Windows:</p>
+
+<p style="margin-left:17%; margin-top: 1em">&gt; <b>rotctl
+-m 401 -r COM2</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Connect to a
+running <b>rotctld</b> with rotator model 2 (&ldquo;NET
+rotctl&rdquo;) on the local host and specifying the TCP
+port, and querying the position:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rotctl -m
+2 -r localhost:4533 t_pos</b></p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Report bugs
+to:</p>
+
+
+<p style="margin-left:22%;"><a href="mailto:hamlib-developer@lists.sourceforge.net">Hamlib
+Developer mailing list </a></p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio, rotator, and amplifier control functions
+for developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2001-2011 Stephane Fillod <br>
+Copyright &copy; 2002-2017 the Hamlib Group (various
+contributors) <br>
+Copyright &copy; 2003-2020 Nate Bargmann</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>less</b>(1),
+<b>more</b>(1), <b>rotctld</b>(1), <b>hamlib</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

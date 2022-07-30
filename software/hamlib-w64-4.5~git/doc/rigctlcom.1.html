@@ -1,0 +1,468 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:52 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>RIGCTLCOM</title>
+
+</head>
+<body>
+
+<h1 align="center">RIGCTLCOM</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#EXIT STATUS">EXIT STATUS</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">rigctlcom - COM
+port passthru as TS-2000 emulator to your rig</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="14%">
+
+
+<p style="margin-top: 1em"><b>rigctlcom</b></p></td>
+<td width="1%"></td>
+<td width="74%">
+
+
+<p style="margin-top: 1em">[<b>-hlLuV</b>]
+[<b>-m&nbsp;</b><i>id</i>] [<b>-r&nbsp;</b><i>device</i>]
+[<b>-R&nbsp;</b><i>device</i>]
+[<b>-p&nbsp;</b><i>device</i>]
+[<b>-d&nbsp;</b><i>device</i>] [<b>-P&nbsp;</b><i>type</i>]
+[<b>-D&nbsp;</b><i>type</i>] [<b>-s&nbsp;</b><i>baud</i>]
+[<b>-S&nbsp;</b><i>baud</i>] [<b>-c&nbsp;</b><i>id</i>]
+[<b>-C&nbsp;</b><i>parm=val</i>] [<b>-B</b>]
+[<b>-v</b>[<b>-Z</b>]]</p> </td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Allows programs
+which can connect to TS-2000 via COM port to use Hamlib
+radios. Multiple programs can connect to the radio via FLRig
+or rigctld.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Virtual
+serial/COM ports must be set up first using <b>socat</b>(1)
+or similar on POSIX systems (BSD, Linux, OS/X). On Microsoft
+Windows available utilities are
+<a href="http://com0com.sourceforge.net">com0com</a>,
+<a href="https://freevirtualserialports.com">Free Virtual
+Serial Ports</a>, or
+<a href="http://www.virtualserialportdriver.com/">VPSD</a>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Please report
+bugs and provide feedback at the e-mail address given in the
+<b>BUGS</b> section below. Patches and code enhancements
+sent to the same address are welcome.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This program
+follows the usual GNU command line syntax. Short options
+that take an argument may have the value follow immediately
+or be separated by a space. Long options starting with two
+dashes (&rsquo;-&rsquo;) require an &rsquo;=&rsquo; between
+the option and any argument.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is a
+summary of the supported options: <b><br>
+-m</b>, <b>--model</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Select radio model number.</p>
+
+<p style="margin-left:22%; margin-top: 1em">See model list
+(use &ldquo;rigctlcom -l&rdquo;).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+<b>rigctlcom</b> (or third party software using the C API)
+will use radio model 2 for <b>NET rigctl</b> (communicating
+with <b>rigctld</b>).</p>
+
+<p style="margin-left:11%;"><b>-r</b>,
+<b>--rig-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the radio.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The special
+string &ldquo;uh-rig&rdquo; may be given to enable micro-ham
+device support.</p>
+
+<p style="margin-left:11%;"><b>-R</b>,
+<b>--rig-file2</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of one of the virtual com ports -- your program will
+connect to the other com port of the virtual pair.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Virtual serial
+ports on POSIX systems can be done with <b>socat</b>(1):</p>
+
+<p style="margin-left:28%; margin-top: 1em">$ <b>socat -d
+-d pty,raw,echo=0 pty,raw,echo=0</b></p>
+
+<p style="margin-left:22%; margin-top: 1em">See this
+<a href="https://stackoverflow.com/a/19733677">Stackoverflow
+answer for using socat</a>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">On Microsoft
+Windows available utilities are com0com, Free Virtual Serial
+Ports, or VPSD (see <b>DESCRIPTION</b> above for WWW
+links).</p>
+
+<p style="margin-left:11%;"><b>-p</b>,
+<b>--ptt-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the Push-To-Talk device using a device file as
+described above.</p>
+
+<p style="margin-left:11%;"><b>-d</b>,
+<b>--dcd-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the Data Carrier Detect device using a device file
+as described above.</p>
+
+<p style="margin-left:11%;"><b>-P</b>,
+<b>--ptt-type</b>=<i>type</i></p>
+
+<p style="margin-left:22%;">Use <i>type</i> of Push-To-Talk
+device.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Supported types
+are &rsquo;RIG&rsquo; (CAT command), &rsquo;DTR&rsquo;,
+&rsquo;RTS&rsquo;, &rsquo;PARALLEL&rsquo;,
+&rsquo;NONE&rsquo;, overriding PTT type defined in the
+rig&rsquo;s backend.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Some side
+effects of this command are that when type is set to DTR,
+read PTT state comes from the <b>Hamlib</b> frontend, not
+read from the radio. When set to NONE, PTT state cannot be
+read or set even if rig backend supports reading/setting PTT
+status from the rig.</p>
+
+<p style="margin-left:11%;"><b>-D</b>,
+<b>--dcd-type</b>=<i>type</i></p>
+
+<p style="margin-left:22%;">Use <i>type</i> of Data Carrier
+Detect device.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Supported types
+are &rsquo;RIG&rsquo; (CAT command), &rsquo;DSR&rsquo;,
+&rsquo;CTS&rsquo;, &rsquo;CD&rsquo;, &rsquo;PARALLEL&rsquo;,
+&rsquo;NONE&rsquo;.</p>
+
+<p style="margin-left:11%;"><b>-s</b>,
+<b>--serial-speed</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set serial speed to <i>baud</i>
+rate.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from radio backend capabilities (set by
+<b>-m</b> above) as the default.</p>
+
+<p style="margin-left:11%;"><b>-S</b>,
+<b>--serial-speed2</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set serial speed to <i>baud</i>
+rate for virtual com port (see <b>-R</b>).</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from radio backend capabilities (set by
+<b>-m</b> above) as the default.</p>
+
+<p style="margin-left:11%;"><b>-c</b>,
+<b>--civaddr</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Use <i>id</i> as the CI-V
+address to communicate with the rig.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Only useful for
+Icom and some Ten-Tec rigs.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The <i>id</i> is in decimal notation, unless prefixed by
+<i>0x</i>, in which case it is hexadecimal.</p>
+
+<p style="margin-left:11%;"><b>-L</b>,
+<b>--show-conf</b></p>
+
+<p style="margin-left:22%;">List all config parameters for
+the radio defined with <b>-m</b> above.</p>
+
+<p style="margin-left:11%;"><b>-C</b>,
+<b>--set-conf</b>=<i>parm=val</i>[<i>,parm=val</i>]</p>
+
+<p style="margin-left:22%;">Set radio configuration
+parameter(s), e.g. <i>stop_bits=2</i>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use the
+<b>-L</b> option above for a list of configuration
+parameters for a given model number.</p>
+
+<p style="margin-left:11%;"><b>-u</b>,
+<b>--dump-caps</b></p>
+
+<p style="margin-left:22%;">Dump capabilities for the radio
+defined with <b>-m</b> above and exit.</p>
+
+<p style="margin-left:11%;"><b>-l</b>, <b>--list</b></p>
+
+<p style="margin-left:22%;">List all model numbers defined
+in <b>Hamlib</b> and exit.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The list is
+sorted by model number.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: In
+Linux the list can be scrolled back using
+<b>Shift-PageUp</b>/<b>Shift-PageDown</b>, or using the
+scrollbars of a virtual terminal in X or the cmd window in
+Windows. The output can be piped to <b>more</b>(1) or
+<b>less</b>(1), e.g. &ldquo;rigctl -l | more&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>-n</b>,
+<b>--no-restore-ai</b></p>
+
+<p style="margin-left:22%;"><b>rigctl</b> restores the
+state of auto information (AI) on the controlled rig.</p>
+
+<p style="margin-left:22%; margin-top: 1em">If this is not
+desired, for example if you are using <b>rigctl</b> to turn
+AI mode on or off, pass this option.</p>
+
+<p style="margin-left:11%;"><b>-B</b>, <b>--mapa2b</b></p>
+
+<p style="margin-left:22%;">Maps set_freq on VFOA to VFOB
+instead. This allows using CW skimmer with the rig in split
+mode and clicking on a frequency in CW skimmer will set VFOB
+to the transmit frequency.</p>
+
+<p style="margin-left:11%;"><b>-v</b>, <b>--verbose</b></p>
+
+<p style="margin-left:22%;">Set verbose mode, cumulative
+(see <b>DIAGNOSTICS</b> below).</p>
+
+<p style="margin-left:11%;"><b>-Z</b>,
+<b>--debug-time-stamps</b></p>
+
+<p style="margin-left:22%;">Enable time stamps for the
+debug messages.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use only in
+combination with the <b>-v</b> option as it generates no
+output on its own.</p>
+
+<p style="margin-left:11%;"><b>-h</b>, <b>--help</b></p>
+
+<p style="margin-left:22%;">Show a summary of these options
+and exit.</p>
+
+<p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
+
+<p style="margin-left:22%;">Show version of <b>rigctl</b>
+and exit.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Some options may not be implemented by a given backend and
+will return an error. This is most likely to occur with the
+<b>--set-conf</b> and <b>--show-conf</b> options.</p>
+
+<h2>DIAGNOSTICS
+<a name="DIAGNOSTICS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-v</b>,
+<b>--verbose</b> option allows different levels of
+diagnostics to be output to <b>stderr</b> and correspond to
+-v for <b>BUG</b>, -vv for <b>ERR</b>, -vvv for <b>WARN</b>,
+-vvvv for <b>VERBOSE</b>, or -vvvvv for <b>TRACE</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A given verbose
+level is useful for providing needed debugging information
+to the email address below. For example, TRACE output shows
+all of the values sent to and received from the radio which
+is very useful for radio backend library development and may
+be requested by the developers.</p>
+
+<h2>EXIT STATUS
+<a name="EXIT STATUS"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigctlcom</b>
+exits with:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>0</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if all operations completed normally;</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>1</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if there was an invalid command line option or
+argument;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>2</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if an error was returned by <b>Hamlib</b>.</p></td></tr>
+</table>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>rigctlcom</b> with FLRig as the Hamlib model and virtual
+com port pair COM9/COM10, e.g.
+<a href="http://n1mm.hamdocs.com">N1MM Logger+</a> attaching
+to COM10 and using the TS-2000 emulator attached to COM9
+(assumes virtual serial/COM ports pipe has been created with
+the proper utility as described above):</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rigctlcom
+-m 4 -R COM9 -S 115200</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">The following
+diagram shows the communications flow that allows N1MM
+Logger+ to communicate with a radio connected to Flrig:</p>
+
+<p style="margin-left:17%; margin-top: 1em">Flrig
+-&gt;&lt;- rigctlcom -&gt; COM9 &lt;- virt_port_pipe -&gt;
+COM10 &lt;- N1MM</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Report bugs
+to:</p>
+
+
+<p style="margin-left:22%;"><a href="mailto:hamlib-developer@lists.sourceforge.net">Hamlib
+Developer mailing list </a></p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio, rotator, and amplifier control functions
+for developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2000-2011 Stephane Fillod <br>
+Copyright &copy; 2000-2018 the Hamlib Group (various
+contributors) <br>
+Copyright &copy; 2010-2020 Nate Bargmann <br>
+Copyright &copy; 2019 Michael Black W9MDB</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigctld</b>(1),
+<b>rigctl</b>(1), <b>socat</b>(1), <b>hamlib</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

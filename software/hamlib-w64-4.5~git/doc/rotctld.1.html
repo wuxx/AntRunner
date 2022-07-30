@@ -1,0 +1,981 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:53 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>ROTCTLD</title>
+
+</head>
+<body>
+
+<h1 align="center">ROTCTLD</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#COMMANDS">COMMANDS</a><br>
+<a href="#PROTOCOL">PROTOCOL</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#SECURITY">SECURITY</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">rotctld - TCP
+rotator control daemon</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="11%">
+
+
+<p style="margin-top: 1em"><b>rotctld</b></p></td>
+<td width="1%"></td>
+<td width="77%">
+
+
+<p style="margin-top: 1em">[<b>-hlLuV</b>]
+[<b>-m&nbsp;</b><i>id</i>] [<b>-r&nbsp;</b><i>device</i>]
+[<b>-s&nbsp;</b><i>baud</i>] [<b>-T&nbsp;</b><i>IPADDR</i>]
+[<b>-t&nbsp;</b><i>number</i>]
+[<b>-C&nbsp;</b><i>parm=val</i>] [<b>-v</b>[<b>-Z</b>]]</p></td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+<b>rotctld</b> program is a rotator control daemon that
+handles client requests via TCP sockets. This allows
+multiple user programs to share one rotator (this needs more
+development). Multiple rotators can be controlled on
+different TCP ports by use of multiple <b>rotctld</b>
+processes. The syntax of the commands are the same as
+<b>rotctl</b>(1). It is hoped that <b>rotctld</b> will be
+especially useful for client authors using languages such as
+Perl, Python, PHP, and others.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>rotctld</b>
+communicates to a client through a TCP socket using text
+commands shared with <b>rotctl</b>. The protocol is simple,
+commands are sent to <b>rotctld</b> on one line and
+<b>rotctld</b> responds to &ldquo;get&rdquo; commands with
+the requested values, one per line, when successful,
+otherwise, it responds with one line &ldquo;RPRT x&rdquo;,
+where &rsquo;x&rsquo; is a negative number indicating the
+error code. Commands that do not return values respond with
+the line &ldquo;RPRT x&rdquo;, where &rsquo;x&rsquo; is
+&rsquo;0&rsquo; when successful, otherwise is a regative
+number indicating the error code. Each line is terminated
+with a newline &rsquo;\n&rsquo; character. This protocol is
+primarily for use by the <b>NET rotctl</b> (rotator model 2)
+backend.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A separate
+<b>Extended Response Protocol</b> extends the above behavior
+by echoing the received command string as a header, any
+returned values as a key: value pair, and the &ldquo;RPRT
+x&rdquo; string as the end of response marker which includes
+the <b>Hamlib</b> success or failure value. See the
+<b>PROTOCOL</b> section for details. Consider using this
+protocol for clients that will interact with <b>rotctld</b>
+directly through a TCP socket.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Keep in mind
+that Hamlib is BETA level software. While a lot of backend
+libraries lack complete rotator support, the basic functions
+are usually well supported.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Please report
+bugs and provide feedback at the e-mail address given in the
+<b>BUGS</b> section below. Patches and code enhancements
+sent to the same address are welcome.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This program
+follows the usual GNU command line syntax. Short options
+that take an argument may have the value follow immediately
+or be separated by a space. Long options starting with two
+dashes (&rsquo;-&rsquo;) require an &rsquo;=&rsquo; between
+the option and any argument.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is a
+summary of the supported options: <b><br>
+-m</b>, <b>--model</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Select rotator model
+number.</p>
+
+<p style="margin-left:22%; margin-top: 1em">See model list
+(use &ldquo;rotctld -l&rdquo;).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+<b>rotctl</b> (or third party software using the C API) will
+use rotator model 2 for <b>NET rotctl</b> (this model number
+is not used for rotctld even though it shows in the model
+list).</p>
+
+<p style="margin-left:11%;"><b>-r</b>,
+<b>--rot-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:11%;"><b>-s</b>,
+<b>--serial-speed</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set serial speed to <i>baud</i>
+rate.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from rotator backend capabilities as the
+default.</p>
+
+<p style="margin-left:11%;"><b>-T</b>,
+<b>--listen-addr</b>=<i>IPADDR</i></p>
+
+<p style="margin-left:22%;">Use <i>IPADDR</i> as the
+listening IP address.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The default is
+ANY.</p>
+
+<p style="margin-left:11%;"><b>-t</b>,
+<b>--port</b>=<i>number</i></p>
+
+<p style="margin-left:22%;">Use <i>number</i> as the TCP
+listening port.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The default is
+4533.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: As
+<b>rigctld</b>'s default port is 4532, it is advisable to
+use odd numbered ports for <b>rotctld</b>, e.g. 4533, 4535,
+4537, etc.</p>
+
+<p style="margin-left:11%;"><b>-L</b>,
+<b>--show-conf</b></p>
+
+<p style="margin-left:22%;">List all configuration
+parameters for the rotator defined with <b>-m</b> above.</p>
+
+<p style="margin-left:11%;"><b>-C</b>,
+<b>--set-conf</b>=<i>parm=val</i>[<i>,parm=val</i>]</p>
+
+<p style="margin-left:22%;">Set rotator configuration
+parameter(s), e.g. <i>stop_bits=2</i>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use the
+<b>-L</b> option above for a list of configuration
+parameters for a given model number.</p>
+
+<p style="margin-left:11%;"><b>-u</b>,
+<b>--dump-state</b></p>
+
+<p style="margin-left:22%;">Dump state for the rotator
+defined with <b>-m</b> above and exit.</p>
+
+<p style="margin-left:11%;"><b>-u</b>,
+<b>--dump-caps</b></p>
+
+<p style="margin-left:22%;">Dump capabilities for the
+rotator defined with <b>-m</b> above and exit.</p>
+
+<p style="margin-left:11%;"><b>-l</b>, <b>--list</b></p>
+
+<p style="margin-left:22%;">List all rotator model numbers
+defined in <b>Hamlib</b> and exit.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The list is
+sorted by model number.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: In
+Linux the list can be scrolled back using
+<b>Shift-PageUp</b>/<b>Shift-PageDown</b>, or using the
+scrollbars of a virtual terminal in X or the cmd window in
+Windows. The output can be piped to <b>more</b>(1) or
+<b>less</b>(1), e.g. &ldquo;rotctl -l | more&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>-v</b>, <b>--verbose</b></p>
+
+<p style="margin-left:22%;">Set verbose mode, cumulative
+(see <b>DIAGNOSTICS</b> below).</p>
+
+<p style="margin-left:11%;"><b>-Z</b>,
+<b>--debug-time-stamps</b></p>
+
+<p style="margin-left:22%;">Enable time stamps for the
+debug messages.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use only in
+combination with the <b>-v</b> option as it generates no
+output on its own.</p>
+
+<p style="margin-left:11%;"><b>-h</b>, <b>--help</b></p>
+
+<p style="margin-left:22%;">Show a summary of these options
+and exit.</p>
+
+<p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
+
+<p style="margin-left:22%;">Show version of <b>rotctld</b>
+and exit.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Some options may not be implemented by a given backend and
+will return an error. This is most likely to occur with the
+<b>--set-conf</b> and <b>--show-conf</b> options.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Be aware that
+the backend for the rotator to be controlled, or the rotator
+itself may not support some commands. In that case, the
+operation will fail with a <b>Hamlib</b> error code.</p>
+
+<h2>COMMANDS
+<a name="COMMANDS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Commands can be
+sent over the TCP socket either as a single char, or as a
+long command name plus the value(s) space separated on one
+&rsquo;\n&rsquo; terminated line. See <b>PROTOCOL</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Since most of
+the <b>Hamlib</b> operations have a <b>set</b> and a
+<b>get</b> method, an upper case letter will be used for
+<b>set</b> methods whereas the corresponding lower case
+letter refers to the <b>get</b> method. Each operation also
+has a long name; prepend a backslash, &rsquo;\&rsquo;, to
+send a long command name.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Example (Perl):
+&ldquo;print $socket &quot;\\dump_caps\n&quot;;&rdquo; to
+see what the rotator&rsquo;s backend can do (<b>Note</b>: In
+Perl and many other languages a &rsquo;\&rsquo; will need to
+be escaped with a preceding &rsquo;\&rsquo; so that even
+though two backslash characters appear in the code, only one
+will be passed to <b>rotctld</b>. This is a possible bug,
+beware!).</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+The backend for the rotator to be controlled, or the rotator
+itself may not support some commands. In that case, the
+operation will fail with a <b>Hamlib</b> error message.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is a
+summary of the supported commands (In the case of <b>set</b>
+commands the quoted italicized string is replaced by the
+value in the description. In the case of <b>get</b> commands
+the quoted italicized string is the key name of the value
+returned.): <b><br>
+P</b>, <b>set_pos</b> '<i>Azimuth</i>'
+'<i>Elevation</i>'</p>
+
+<p style="margin-left:22%;">Set position.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Azimuth</i>'
+and '<i>Elevation</i>' are floating point values.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For example
+(typed text shown in bold):</p>
+
+<p style="margin-left:28%; margin-top: 1em"><b>P 163.0
+41.0</b></p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: If
+the rotator does not support setting elevation (most do not)
+supply &ldquo;0.0&rdquo; for '<i>Elevation</i>'.</p>
+
+<p style="margin-left:11%;"><b>p</b>, <b>get_pos</b></p>
+
+<p style="margin-left:22%;">Get position.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Azimuth</i>'
+and '<i>Elevation</i>' are returned as double precision
+floating point values.</p>
+
+<p style="margin-left:11%;"><b>M</b>, <b>move</b>
+'<i>Direction</i>' '<i>Speed</i>'</p>
+
+<p style="margin-left:22%;">Move the rotator in a specific
+direction at the given rate.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Direction</i>'
+is an integer defined as &rsquo;2&rsquo; = Up,
+&rsquo;4&rsquo; = Down, &rsquo;8&rsquo; = Left, and
+&rsquo;16&rsquo; = Right.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Speed</i>'
+is an integer between 1 and 100. Use -1 for no change to
+current speed.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Not all backends that implement the move command use the
+Speed value.</p>
+
+<p style="margin-left:11%;"><b>S</b>, <b>stop</b></p>
+
+<p style="margin-left:22%;">Stop the rotator.</p>
+
+<p style="margin-left:11%;"><b>K</b>, <b>park</b></p>
+
+<p style="margin-left:22%;">Park the rotator.</p>
+
+<p style="margin-left:11%;"><b>C</b>, <b>set_conf</b>
+'<i>Token</i>' '<i>Value</i>'</p>
+
+<p style="margin-left:22%;">Set a configuration
+parameter.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Token</i>'
+is a string; see the <b>-C</b> option and the <b>-L</b>
+output.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Value</i>'
+is a string of up to 20 characters.</p>
+
+<p style="margin-left:11%;"><b>R</b>, <b>reset</b>
+'<i>Reset</i>'</p>
+
+<p style="margin-left:22%;">Reset the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Reset</i>'
+accepts an integer value of &rsquo;1&rsquo; for &ldquo;Reset
+All&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>_</b>, <b>get_info</b></p>
+
+<p style="margin-left:22%;">Get misc information about the
+rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Returns
+'<i>Info</i>' &ldquo;Model Name&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>dump_state</b></p>
+
+<p style="margin-left:22%;">Return certain state
+information about the rotator backend.</p>
+
+<p style="margin-left:11%;"><b>1</b>, <b>dump_caps</b></p>
+
+<p style="margin-left:22%;">Not a real rot remote command,
+it just dumps capabilities, i.e. what the backend knows
+about this model, and what it can do.</p>
+
+<p style="margin-left:11%;"><b>w</b>, <b>send_cmd</b>
+'<i>Cmd</i>'</p>
+
+<p style="margin-left:22%;">Send a raw command string to
+the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">ASCII CR is
+appended automatically at the end of the command for text
+protocols. For binary protocols, enter hexadecimal values as
+&ldquo;\0xAA\0xBB&rdquo;.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Locator
+Commands</b> <br>
+These commands offer conversions of Degrees Minutes Seconds
+to other formats, <b>Maidenhead</b> square locator
+conversions and distance and azimuth conversions. <b><br>
+L</b>, <b>lonlat2loc</b> '<i>Longitude</i>'
+'<i>Latitude</i>' '<i>Loc Len</i>'</p>
+
+<p style="margin-left:22%;">Returns the <b>Maidenhead</b>
+'<i>Locator</i>' for the given '<i>Longitude</i>' and
+'<i>Latitude</i>'.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Longitude</i>'
+and '<i>Latitude</i>' are floating point values.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Loc
+Len</i>' is the precision of the returned square and should
+be an even numbered integer value between 2 and 12.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For
+example:</p>
+
+<p style="margin-left:28%; margin-top: 1em"><b>L -170.0
+-85.0 12</b></p>
+
+<p style="margin-left:22%; margin-top: 1em">returns:</p>
+
+<p style="margin-left:28%; margin-top: 1em">Locator:
+AA55AA00AA00</p>
+
+<p style="margin-left:11%;"><b>l</b>, <b>loc2lonlat</b>
+'<i>Locator</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Longitude</i>' and
+'<i>Latitude</i>' in decimal degrees at the approximate
+center of the requested <b>Maidenhead</b> grid square.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Locator</i>'
+can be from 2 to 12 characters in length.</p>
+
+<p style="margin-left:22%; margin-top: 1em">West longitude
+is expressed as a negative value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">South latitude
+is expressed as a negative value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For
+example:</p>
+
+<p style="margin-left:28%; margin-top: 1em"><b>l
+AA55AA00AA00</b></p>
+
+<p style="margin-left:22%; margin-top: 1em">returns:</p>
+
+<p style="margin-left:28%; margin-top: 1em">Longitude:
+-169.999983 Latitude: -84.999991</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Despite the use of double precision variables internally,
+some rounding error occurs.</p>
+
+<p style="margin-left:11%;"><b>D</b>, <b>dms2dec</b>
+'<i>Degrees</i>' '<i>Minutes</i>' '<i>Seconds</i>'
+'<i>S/W</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Dec Degrees</i>', a
+signed floating point value.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Degrees</i>'
+and '<i>Minutes</i>' are integer values.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Seconds</i>'
+is a floating point value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>S/W</i>' is
+a flag with &rsquo;1&rsquo; indicating South latitude or
+West longitude and &rsquo;0&rsquo; North or East (the flag
+is needed as computers don&rsquo;t recognize a signed zero
+even though only the '<i>Degrees</i>' value is typically
+signed in DMS notation).</p>
+
+<p style="margin-left:11%;"><b>d</b>, <b>dec2dms</b>
+'<i>Dec Degrees</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Degrees</i>'
+'<i>Minutes</i>' '<i>Seconds</i>' '<i>S/W</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Values are as
+in <b>dms2dec</b> above.</p>
+
+<p style="margin-left:11%;"><b>E</b>, <b>dmmm2dec</b>
+'<i>Degrees</i>' '<i>Dec Minutes</i>' '<i>S/W</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Dec Degrees</i>', a
+signed floating point value.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Degrees</i>'
+is an integer value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Dec
+Minutes</i>' is a floating point value.</p>
+
+<p style="margin-left:22%; margin-top: 1em">'<i>S/W</i>' is
+a flag as in <b>dms2dec</b> above.</p>
+
+<p style="margin-left:11%;"><b>e</b>, <b>dec2dmmm</b>
+'<i>Dec Deg</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Degrees</i>'
+'<i>Minutes</i>' '<i>S/W</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Values are as
+in <b>dmmm2dec</b> above.</p>
+
+<p style="margin-left:11%;"><b>B</b>, <b>qrb</b> '<i>Lon
+1</i>' '<i>Lat 1</i>' '<i>Lon 2</i>' '<i>Lat 2</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Distance</i>' and
+'<i>Azimuth</i>'.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Distance</i>'
+is in km.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">'<i>Azimuth</i>'
+is in degrees.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Supplied
+<i>Lon</i>/<i>Lat</i> values are signed floating point
+numbers.</p>
+
+<p style="margin-left:11%;"><b>A</b>, <b>a_sp2a_lp</b>
+'<i>Short Path Deg</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Long Path
+Deg</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Both the
+supplied argument and returned value are floating point
+values within the range of 0.00 to 360.00.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Supplying a negative value will return an error message.</p>
+
+<p style="margin-left:11%;"><b>a</b>, <b>d_sp2d_lp</b>
+'<i>Short Path km</i>'</p>
+
+<p style="margin-left:22%;">Returns '<i>Long Path
+km</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Both the
+supplied argument and returned value are floating point
+values.</p>
+
+<p style="margin-left:11%;"><b>pause</b>
+'<i>Seconds</i>'</p>
+
+<p style="margin-left:22%;">Pause for the given whole
+(integer) number of '<i>Seconds</i>' before sending the next
+command to the rotator.</p>
+
+<h2>PROTOCOL
+<a name="PROTOCOL"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">There are two
+protocols in use by <b>rotctld</b>, the <b>Default
+Protocol</b> and the <b>Extended Response Protocol</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The <b>Default
+Protocol</b> is intended primarily for the communication
+between <b>Hamlib</b> library functions and <b>rotctld</b>
+(&ldquo;NET rotctl&rdquo;, available using rotator model
+&rsquo;2&rsquo;).</p>
+
+<p style="margin-left:11%; margin-top: 1em">The <b>Extended
+Response Protocol</b> is intended to be used with scripts or
+other programs interacting directly with <b>rotctld</b> as
+consistent feedback is provided.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Default
+Protocol</b> <br>
+The <b>Default Protocol</b> is intentionally simple.
+Commands are entered on a single line with any needed
+values. In practice, reliable results are obtained by
+terminating each command string with a newline character,
+&rsquo;\n&rsquo;.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Example set
+position (Perl code):</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>print
+$socket &quot;P 135 10\n&quot;;</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">or:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>print
+$socket &quot;\\set_pos 135 10\n&quot;;</b> # escape leading
+&rsquo;\&rsquo;</p>
+
+<p style="margin-left:11%; margin-top: 1em">A one line
+response will be sent as a reply to <b>set</b> commands,
+&ldquo;RPRT <i>x</i>\n&rdquo; where <i>x</i> is the Hamlib
+error code with &rsquo;0&rsquo; indicating success of the
+command.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Responses from
+<b>rotctld get</b> commands are text values and match the
+same tokens used in the <b>set</b> commands. Each value is
+returned on its own line. On error the string &ldquo;RPRT
+<i>x</i>\n&rdquo; is returned where <i>x</i> is the Hamlib
+error code.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Example get
+position (Perl code):</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>print
+$socket &quot;p\n&quot;;</b> <br>
+&quot;135&quot; <br>
+&quot;10&quot;</p>
+
+<p style="margin-left:11%; margin-top: 1em">Most <b>get</b>
+functions return one to three values. A notable exception is
+the <b>dump_caps</b> command which returns many lines of
+<b>key</b>:<i>value</i> pairs.</p>
+
+<p style="margin-left:11%; margin-top: 1em">This protocol
+is primarily used by the &ldquo;NET rotctl&rdquo; (rotctl
+model 2) backend which allows applications already written
+for Hamlib&rsquo;s C API to take advantage of <b>rotctld</b>
+without the need of rewriting application code. An
+application&rsquo;s user can select rotator model 2
+(&ldquo;NET rotctl&rdquo;) and then set <b>rot_pathname</b>
+to &ldquo;localhost:4533&rdquo; or other network
+<i>host</i>:<i>port</i> (set by the <b>-T</b>/<b>-t</b>
+options, respectively, above).</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Extended
+Response Protocol</b> <br>
+The Extended Response protocol adds several rules to the
+strings returned by <b>rotctld</b> and adds a rule for the
+command syntax.</p>
+
+<p style="margin-left:11%; margin-top: 1em">1. The command
+received by <b>rotctld</b> is echoed with its long command
+name followed by the value(s) (if any) received from the
+client terminated by the specified response separator as the
+first record of the response.</p>
+
+<p style="margin-left:11%; margin-top: 1em">2. The last
+record of each block is the string &ldquo;RPRT
+<i>x</i>\n&rdquo; where <i>x</i> is the numeric return value
+of the Hamlib backend function that was called by the
+command.</p>
+
+<p style="margin-left:11%; margin-top: 1em">3. Any records
+consisting of data values returned by the rotator backend
+are prepended by a string immediately followed by a colon
+then a space and then the value terminated by the response
+separator, e.g. &ldquo;Azimuth: 90.000000\n&rdquo; when the
+command was prepended by &rsquo;+&rsquo;.</p>
+
+<p style="margin-left:11%; margin-top: 1em">4. All commands
+received will be acknowledged by <b>rotctld</b> with records
+from rules 1 and 2. Records from rule 3 are only returned
+when data values must be returned to the client.</p>
+
+<p style="margin-left:11%; margin-top: 1em">An example
+response to a <b>P</b> command sent from the shell prompt
+(note the prepended &rsquo;+&rsquo;):</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>echo
+&quot;+P 90 45&quot; | nc -w 1 localhost 4533</b> <br>
+set_pos: 90 45 <br>
+RPRT 0</p>
+
+<p style="margin-left:11%; margin-top: 1em">In this case
+the long command name and values are returned on the first
+line and the second line contains the end of block marker
+and the numeric rotor backend return value indicating
+success.</p>
+
+<p style="margin-left:11%; margin-top: 1em">An example
+response to a <b>get_pos</b> query:</p>
+
+<p style="margin-left:15%; margin-top: 1em">$ <b>echo
+&quot;+\get_pos&quot; | nc -w 1 localhost 4533</b> <br>
+get_pos: <br>
+Azimuth: 90.000000 <br>
+Elevation: 45.000000 <br>
+RPRT 0</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The &rsquo;\&rsquo; is still required for the long command
+name even with the ERP character.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In this case,
+as no value is passed to <b>rotctld</b>, the first line
+consists only of the long command name. The final line shows
+that the command was processed successfully by the rotor
+backend.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Invoking the
+Extended Response Protocol requires prepending a command
+with a punctuation character. As shown in the examples
+above, prepending a &rsquo;+&rsquo; character to the command
+results in the responses being separated by a newline
+character (&rsquo;\n&rsquo;). Any other punctuation
+character recognized by the C <b>ispunct</b>() function
+except &rsquo;\&rsquo;, &rsquo;?&rsquo;, or &rsquo;_&rsquo;
+will cause that character to become the response separator
+and the entire response will be on one line.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Separator
+character summary:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="4%">
+
+
+<p>&rsquo;<b>+</b>&rsquo;</p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Each record of the response is appended with a newline
+(&rsquo;\n&rsquo;).</p> </td></tr>
+</table>
+
+<p style="margin-left:11%;">&rsquo;<b>;</b>&rsquo;,
+&rsquo;<b>|</b>&rsquo;, or, &rsquo;<b>,</b>&rsquo;</p>
+
+<p style="margin-left:22%;">Each record of the response is
+appended by the given character resulting in entire response
+on one line.</p>
+
+<p style="margin-left:22%; margin-top: 1em">These are
+common record separators for text representations of
+spreadsheet data, etc.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="4%">
+
+
+<p>&rsquo;<b>?</b>&rsquo;</p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Reserved for help in <b>rotctl</b>.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="4%">
+
+
+<p>&rsquo;<b>_</b>&rsquo;</p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Reserved for <b>get_info</b> short command</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="4%">
+
+
+<p>&rsquo;<b>#</b>&rsquo;</p></td>
+<td width="7%"></td>
+<td width="78%">
+
+
+<p>Reserved for comments when reading a command file
+script.</p> </td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Other punctuation characters have not been tested! Use at
+your own risk.</p>
+
+<p style="margin-left:11%; margin-top: 1em">For example,
+invoking a <b>get_pos</b> query with a leading
+&rsquo;;&rsquo; returns:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em">get_pos:;Azimuth:
+90.000000;Elevation: 45.000000;RPRT 0</p>
+
+<p style="margin-left:11%; margin-top: 1em">Or, using the
+pipe character &rsquo;|&rsquo; returns:</p>
+
+
+<p style="margin-left:17%; margin-top: 1em">get_pos:|Azimuth:
+90.000000|Elevation: 45.000000|RPRT 0</p>
+
+<p style="margin-left:11%; margin-top: 1em">And a
+<b>set_pos</b> command prepended with a &rsquo;|&rsquo;
+returns:</p>
+
+<p style="margin-left:17%; margin-top: 1em">set_pos: 135
+22.5|RPRT 0</p>
+
+<p style="margin-left:11%; margin-top: 1em">Such a format
+will allow reading a response as a single event using a
+preferred response separator. Other punctuation characters
+have not been tested!</p>
+
+<p style="margin-left:11%; margin-top: 1em">All commands
+with the exception of <b>set_conf</b> have been tested with
+the Extended Response protocol and the included
+<b>testrotctld.pl</b> Perl script.</p>
+
+<h2>DIAGNOSTICS
+<a name="DIAGNOSTICS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-v</b>,
+<b>--verbose</b> option allows different levels of
+diagnostics to be output to <b>stderr</b> and correspond to
+-v for <b>BUG</b>, -vv for <b>ERR</b>, -vvv for <b>WARN</b>,
+-vvvv for <b>VERBOSE</b>, or -vvvvv for <b>TRACE</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A given verbose
+level is useful for providing needed debugging information
+to the email address below. For example, TRACE output shows
+all of the values sent to and received from the radio which
+is very useful for radio backend library development and may
+be requested by the developers.</p>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>rotctld</b> for a Hy-Gain Ham IV rotor with the Idiom
+Press RotorEZ board installed using a USB-to-serial adapter
+and backgrounding:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rotctld -m
+401 -r /dev/ttyUSB1 &amp;</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>rotctld</b> for RotorEZ using COM2 on Win32:</p>
+
+<p style="margin-left:17%; margin-top: 1em">&gt; <b>rotctl
+-m 401 -r COM2</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Connect to the
+already running <b>rotctld</b>, and set position to 135.0
+degrees azimuth and 30.0 degrees elevation with a 1 second
+read timeout from the shell prompt:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>echo
+&quot;\set_pos 135.0 30.0&quot; | nc -w 1 localhost
+4533</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Connect to a
+running <b>rotctld</b> with <b>rotctl</b> on the local
+host:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rotctl -m
+2</b></p>
+
+<h2>SECURITY
+<a name="SECURITY"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">No
+authentication whatsoever; DO NOT leave this TCP port open
+wide to the Internet. Please ask if stronger security is
+needed or consider using a Secure Shell (<b>ssh</b>(1))
+tunnel.</p>
+
+<p style="margin-left:11%; margin-top: 1em">As
+<b>rotctld</b> does not need any greater permissions than
+<b>rotctl</b>, it is advisable to not start <b>rotctld</b>
+as &ldquo;root&rdquo; or another system user account in
+order to limit any vulnerability.</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The daemon is
+not detaching and backgrounding itself.</p>
+
+<p style="margin-left:11%; margin-top: 1em">No method to
+exit the daemon so the <b>kill</b>(1) command must be used
+to terminate it.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Multiple
+clients using the daemon may experience contention with the
+connected rotator.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Report bugs
+to:</p>
+
+
+<p style="margin-left:22%;"><a href="mailto:hamlib-developer@lists.sourceforge.net">Hamlib
+Developer mailing list </a></p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio, rotator, and amplifier control functions
+for developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2000-2009 Stephane Fillod <br>
+Copyright &copy; 2000-2018 the Hamlib Group (various
+contributors) <br>
+Copyright &copy; 2011-2020 Nate Bargmann</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>kill</b>(1),
+<b>rotctl</b>(1), <b>ssh</b>(1), <b>hamlib</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:51 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>AMPCTL</title>
+
+</head>
+<body>
+
+<h1 align="center">AMPCTL</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#COMMANDS">COMMANDS</a><br>
+<a href="#READLINE">READLINE</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#EXIT STATUS">EXIT STATUS</a><br>
+<a href="#EXAMPLES">EXAMPLES</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">ampctl -
+control radio amplifiers</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em"><b>ampctl</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">[<b>-hiIlLuV</b>]
+[<b>-m&nbsp;</b><i>id</i>] [<b>-r&nbsp;</b><i>device</i>]
+[<b>-s&nbsp;</b><i>baud</i>] [<b>-t&nbsp;</b><i>char</i>]
+[<b>-C&nbsp;</b><i>parm=val</i>] [<b>-v</b>[<b>-Z</b>]]
+[<b>command</b>|<b>-</b>]</p> </td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Control radio
+amplifiers. <b>ampctl</b> accepts <b>commands</b> from the
+command line as well as in interactive mode if none are
+provided on the command line.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Keep in mind
+that Hamlib is BETA level software. While a lot of backend
+libraries lack complete amplifier support, the basic
+functions are usually well supported.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Please report
+bugs and provide feedback at the e-mail address given in the
+<b>BUGS</b> section below. Patches and code enhancements
+sent to the same address are welcome.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This program
+follows the usual GNU command line syntax. Short options
+that take an argument may have the value follow immediately
+or be separated by a space. Long options starting with two
+dashes (&rsquo;-&rsquo;) require an &rsquo;=&rsquo; between
+the option and any argument.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is a
+summary of the supported options: <b><br>
+-m</b>, <b>--model</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Select amplifier model
+number.</p>
+
+<p style="margin-left:22%; margin-top: 1em">See model list
+(use &ldquo;ampctl -l&rdquo;).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+<b>ampctl</b> (or third party software using the C API) will
+use amplifier model 2 for <b>NET ampctl</b> (communicating
+with <b>ampctld</b>).</p>
+
+<p style="margin-left:11%;"><b>-r</b>,
+<b>--amp-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the amplifier.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:11%;"><b>-s</b>,
+<b>--serial-speed</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set serial speed to <i>baud</i>
+rate.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from amplifier backend capabilities (set by
+<b>-m</b> above) as the default.</p>
+
+<p style="margin-left:11%;"><b>-t</b>,
+<b>--send-cmd-term</b>=<i>char</i></p>
+
+<p style="margin-left:22%;">Change the termination
+<i>char</i> for text protocol when using the <b>send_cmd</b>
+command.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The default
+value is ASCII CR (&rsquo;0x0D&rsquo;). ASCII non-printing
+characters can be given as the ASCII number in hexadecimal
+format prepended with &ldquo;0x&rdquo;. You may pass an
+empty string for no termination char. The string
+&ldquo;-1&rdquo; tells <b>ampctl</b> to switch to binary
+protocol.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For example, to
+specify a command terminator for Kenwood style text commands
+pass &ldquo;-t &rsquo;;&rsquo;&rdquo; to ampctl. See
+<b>EXAMPLE</b> below.</p>
+
+<p style="margin-left:11%;"><b>-L</b>,
+<b>--show-conf</b></p>
+
+<p style="margin-left:22%;">List all config parameters for
+the amplifier defined with <b>-m</b> above.</p>
+
+<p style="margin-left:11%;"><b>-C</b>,
+<b>--set-conf</b>=<i>parm=val</i>[<i>,parm=val</i>]</p>
+
+<p style="margin-left:22%;">Set amplifier configuration
+parameter(s), e.g. <i>stop_bits=2</i>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use the
+<b>-L</b> option above for a list of configuration
+parameters for a given model number.</p>
+
+<p style="margin-left:11%;"><b>-u</b>,
+<b>--dump-caps</b></p>
+
+<p style="margin-left:22%;">Dump capabilities for the
+amplifier defined with <b>-m</b> above and exit.</p>
+
+<p style="margin-left:11%;"><b>-l</b>, <b>--list</b></p>
+
+<p style="margin-left:22%;">List all amplifier model
+numbers defined in <b>Hamlib</b> and exit.</p>
+
+<p style="margin-left:22%; margin-top: 1em">The list is
+sorted by model number.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: In
+Linux the list can be scrolled back using
+<b>Shift-PageUp</b>/<b>Shift-PageDown</b>, or using the
+scrollbars of a virtual terminal in X or the cmd window in
+Windows. The output can be piped to <b>more</b>(1) or
+<b>less</b>(1), e.g. &ldquo;ampctl -l | more&rdquo;.</p>
+
+<p style="margin-left:11%;"><b>-i</b>,
+<b>--read-history</b></p>
+
+<p style="margin-left:22%;">Read previously saved command
+and argument history from a file (default
+<i>$HOME/.ampctl_history</i>) for the current session.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Available when
+<b>ampctl</b> is built with Readline support (see READLINE
+below).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: To
+read a history file stored in another directory, set the
+<b>AMPCTL_HIST_DIR</b> environment variable, e.g.
+&ldquo;AMPCTL_HIST_DIR=~/tmp ampctl -i&rdquo;. When
+AMPCTL_HIST_DIR is not set, the value of <b>HOME</b> is
+used.</p>
+
+<p style="margin-left:11%;"><b>-I</b>,
+<b>--save-history</b></p>
+
+<p style="margin-left:22%;">Write current session (and
+previous session(s), if <b>-i</b> option is given) command
+and argument history to a file (default
+<i>$HOME/.ampctl_history</i>) at the end of the current
+session.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Complete
+commands with arguments are saved as a single line to be
+recalled and used or edited. Available when <b>ampctl</b> is
+built with Readline support (see <b>READLINE</b> below).</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>: To
+write a history file in another directory, set the
+<b>AMPCTL_HIST_DIR</b> environment variable, e.g.
+&ldquo;AMPCTL_HIST_DIR=~/tmp ampctl -IRq. When
+AMPCTL_HIST_DIR is not set, the value of <b>HOME</b> is
+used.</p>
+
+<p style="margin-left:11%;"><b>-v</b>, <b>--verbose</b></p>
+
+<p style="margin-left:22%;">Set verbose mode, cumulative
+(see <b>DIAGNOSTICS</b> below).</p>
+
+<p style="margin-left:11%;"><b>-Z</b>,
+<b>--debug-time-stamps</b></p>
+
+<p style="margin-left:22%;">Enable time stamps for the
+debug messages.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use only in
+combination with the <b>-v</b> option as it generates no
+output on its own.</p>
+
+<p style="margin-left:11%;"><b>-h</b>, <b>--help</b></p>
+
+<p style="margin-left:22%;">Show a summary of these options
+and exit.</p>
+
+<p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
+
+<p style="margin-left:22%;">Show version of <b>ampctl</b>
+and exit.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>-</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>Stop option processing and read commands from standard
+input.</p> </td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">See <b>Standard
+Input</b> below.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Some options may not be implemented by a given backend and
+will return an error. This is most likely to occur with the
+<b>--set-conf</b> and <b>--show-conf</b> options.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Please note
+that the backend for the amplifier to be controlled, or the
+amplifier itself may not support some commands. In that
+case, the operation will fail with a <b>Hamlib</b> error
+code.</p>
+
+<h2>COMMANDS
+<a name="COMMANDS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Commands can be
+entered either as a single char, or as a long command name.
+The commands are not prefixed with a dash as the options
+are. They may be typed in when in interactive mode or
+provided as argument(s) in command line interface mode. In
+interactive mode commands and their arguments may be entered
+on a single line:</p>
+
+<p style="margin-left:17%; margin-top: 1em"><b>F
+14250000</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Since most of
+the <b>Hamlib</b> operations have a <b>set</b> and a
+<b>get</b> method, an upper case letter will often be used
+for a <b>set</b> method whereas the corresponding lower case
+letter refers to the <b>get</b> method. Each operation also
+has a long name; in interactive mode, prepend a backslash,
+&rsquo;\&rsquo;, to enter a long command name.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Example: Use
+&ldquo;\dump_caps&rdquo; to see what capabilities this
+amplifier and backend support.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The backend for the amplifier to be controlled, or the
+amplifier itself may not support some commands. In that
+case, the operation will fail with a <b>Hamlib</b> error
+message.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A simple
+example using commands saved to a file (typed text shown in
+bold):</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>cat
+&lt;&lt;.EOF. &gt;cmds.txt</b> <br>
+&gt; <b># File of commands</b> <br>
+&gt; <b>F 14250000</b> <br>
+&gt; <b>f</b> <br>
+&gt; <b>l PWRINPUT</b> <br>
+&gt; <b>l PWRFORWARD</b> <br>
+&gt; <b>l SWR</b> <br>
+&gt; <b>\dump_caps</b> <br>
+&gt; <b>.EOF.</b></p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>ampctl -m1
+- &lt;cmds.txt</b></p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: # File of commands</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: F 14250000</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: f <br>
+Frequency(Hz): 14250000</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: l PWRINPUT <br>
+Level Value: 0</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: l PWRFORWARD <br>
+Level Value: 1499</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: l SWR <br>
+Level Value: 1.000000</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command: \dump_caps <br>
+Caps dump for model: 1 <br>
+Model name: Dummy <br>
+Mfg name: Hamlib <br>
+Backend version: 0.1 <br>
+Backend copyright: LGPL <br>
+Backend status: Alpha <br>
+Amp type: Other <br>
+Port type: None <br>
+Write delay: 0mS, timeout 0mS, 0 retries <br>
+Post Write delay: 0mS <br>
+Has priv data: N <br>
+Get level: SWR NH PF PWRINPUT PWRFORWARD PWRREFLECTED
+PWRPEAK FAULT <br>
+Has Init: Y <br>
+Has Cleanup: Y <br>
+Has Open: Y <br>
+Has Close: Y <br>
+Can set Conf: N <br>
+Can get Conf: N <br>
+Can Reset: Y <br>
+Can get Info: Y</p>
+
+<p style="margin-left:17%; margin-top: 1em">Overall backend
+warnings: 0</p>
+
+<p style="margin-left:17%; margin-top: 1em">Amplifier
+command:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>ampctl
+Commands</b> <br>
+A summary of commands is included below (In the case of
+<b>set</b> commands the quoted italicized string is replaced
+by the value in the description. In the case of <b>get</b>
+commands the quoted italicized string is the key name of the
+value returned.): <b><br>
+Q</b>|<b>q</b>, exit ampctl</p>
+
+<p style="margin-left:22%;">Exit ampctl in interactive
+mode.</p>
+
+<p style="margin-left:22%; margin-top: 1em">When ampctl is
+controlling the amplifier directly, will close the amplifier
+backend and port. When ampctl is connected to ampctld
+(amplifier model 2), the TCP/IP connection to ampctld is
+closed and ampctld remains running, available for another
+TCP/IP network connection.</p>
+
+<p style="margin-left:11%;"><b>F</b>, <b>set_freq</b>
+'<i>Frequency</i>'</p>
+
+<p style="margin-left:22%;">Set '<i>Frequency</i>', in
+Hz.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Frequency may
+be a floating point or integer value.</p>
+
+<p style="margin-left:11%;"><b>f</b>, <b>get_freq</b></p>
+
+<p style="margin-left:22%;">Get '<i>Frequency</i>', in
+Hz.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Returns an
+integer value.</p>
+
+<p style="margin-left:11%;"><b>l</b>, <b>get_level</b>
+'<i>Level</i>'</p>
+
+<p style="margin-left:22%;">Get '<i>Level Value</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Returns Level
+Value as a float or integer for the Level token given.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+Passing a &rsquo;?&rsquo; (query) as the first argument
+instead of a Level token will return a space separated list
+of amplifier backend supported get level tokens. Use this to
+determine the supported levels of a given amplifier
+backend.</p>
+
+<p style="margin-left:11%;"><b>w</b>, <b>send_cmd</b>
+'<i>Cmd</i>'</p>
+
+<p style="margin-left:22%;">Send a raw command string to
+the amplifier.</p>
+
+<p style="margin-left:22%; margin-top: 1em">This is useful
+for testing and troubleshooting amplifier commands and
+responses when developing a backend.</p>
+
+<p style="margin-left:22%; margin-top: 1em">For binary
+protocols enter values as \0xAA\0xBB. Expect a
+'<i>Reply</i>' from the amplifier which will likely be a
+binary block or an ASCII string depending on the
+amplifier&rsquo;s protocol (see your amplifier&rsquo;s
+computer control documentation).</p>
+
+<p style="margin-left:22%; margin-top: 1em">The command
+terminator, set by the <b>send-cmd-term</b> option above,
+will terminate each command string sent to the amplifier.
+This character should not be a part of the input string.</p>
+
+<p style="margin-left:11%;"><b>dump_state</b></p>
+
+<p style="margin-left:22%;">Return certain state
+information about the amplifier backend.</p>
+
+<p style="margin-left:11%;"><b>1</b>, <b>dump_caps</b></p>
+
+<p style="margin-left:22%;">Not a real amplifier remote
+command, it just dumps capabilities, i.e. what the backend
+knows about this model, and what it can do.</p>
+
+<p style="margin-left:22%; margin-top: 1em">TODO: Ensure
+this is in a consistent format so it can be read into a
+hash, dictionary, etc. Bug reports requested.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+This command will produce many lines of output so be very
+careful if using a fixed length array! For example, running
+this command against the Dummy backend results in a number
+of lines of text output.</p>
+
+<p style="margin-left:11%;"><b>_</b>, <b>get_info</b></p>
+
+<p style="margin-left:22%;">Return information from the
+amplifier backend.</p>
+
+<p style="margin-left:11%;"><b>R</b>, <b>reset</b>
+'<i>Reset</i>'</p>
+
+<p style="margin-left:22%;">Perform amplifier
+'<i>Reset</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Reset is an
+integer value: &rsquo;0&rsquo; = None, &rsquo;1&rsquo; =
+Memory reset, &rsquo;2&rsquo; = Fault reset, &rsquo;3&rsquo;
+= Amplifier reset.</p>
+
+<p style="margin-left:11%;"><b>set_powerstat</b> '<i>Power
+Status</i>'</p>
+
+<p style="margin-left:22%;">Set '<i>Power Status</i>'.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Power Status is
+an integer value: &rsquo;0&rsquo; = Power Off,
+&rsquo;1&rsquo; = Power On, &rsquo;2&rsquo; = Power Standby
+(enter standby), &rsquo;4&rsquo; = Power Operate (leave
+standby).</p>
+
+<p style="margin-left:11%;"><b>get_powerstat</b></p>
+
+<p style="margin-left:22%;">Get '<i>Power Status</i>' as in
+<b>set_powerstat</b> above.</p>
+
+<h2>READLINE
+<a name="READLINE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">If
+<b>Readline</b> library development files are found at
+configure time, <b>ampctl</b> will be conditonally built
+with Readline support for command and argument entry.
+Readline command key bindings are at their defaults as
+described in the
+<a href="https://tiswww.cwru.edu/php/chet/readline/rluserman.html">Readline
+manual</a>. <b>ampctl</b> sets the name &ldquo;ampctl&rdquo;
+which can be used in Conditional Init Constructs in the
+Readline Init File (<i>$HOME/.inputrc</i> by default) for
+custom keybindings unique to <b>ampctl</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Command history
+is available with Readline support as described in the
+<a href="https://tiswww.case.edu/php/chet/readline/history.html#SEC1">Readline
+History manual</a>. Command and argument strings are stored
+as single lines even when arguments are prompted for input
+individually. Commands and arguments are not validated and
+are stored as typed with values separated by a single
+space.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Normally
+session history is not saved, however, use of either of the
+<b>-i</b>/<b>--read-history</b> or
+<b>-I</b>/<b>--save-history</b> options when starting
+<b>ampctl</b> will cause any previously saved history to be
+read in and/or the current and any previous session history
+(assuming the <b>-i</b> and <b>-I</b> options are given
+together) will be written out when <b>ampctl</b> is closed.
+Each option is mutually exclusive, i.e. either may be given
+separately or in combination. This is useful to save a set
+of commands and then read them later but not write the
+modified history for a consistent set of test commands in
+interactive mode, for example.</p>
+
+<p style="margin-left:11%; margin-top: 1em">History is
+stored in <i>$HOME/.ampctl_history</i> by default although
+the destination directory may be changed by setting the
+<b>AMPCTL_HIST_DIR</b> environment variable. When
+AMPCTL_HIST_DIR is unset, the value of the <b>HOME</b>
+environment variable is used instead. Only the destination
+directory may be changed at this time.</p>
+
+<p style="margin-left:11%; margin-top: 1em">If Readline
+support is not found at configure time the original internal
+command handler is used. Readline is not used for
+<b>ampctl</b> commands entered on the command line
+regardless if Readline support is built in or not.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Readline support is not included in the MS Windows 32 or 64
+bit binary builds supplied by the Hamlib Project. Running
+<b>ampctl</b> on the MS Windows platform in the
+&rsquo;cmd&rsquo; shell does give session command line
+history, however, it is not saved to disk between
+sessions.</p>
+
+<h2>DIAGNOSTICS
+<a name="DIAGNOSTICS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-v</b>,
+<b>--verbose</b> option allows different levels of
+diagnostics to be output to <b>stderr</b> and correspond to
+-v for <b>BUG</b>, -vv for <b>ERR</b>, -vvv for <b>WARN</b>,
+-vvvv for <b>VERBOSE</b>, or -vvvvv for <b>TRACE</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A given verbose
+level is useful for providing needed debugging information
+to the email address below. For example, TRACE output shows
+all of the values sent to and received from the amplifier
+which is very useful for amplifier backend library
+development and may be requested by the developers.</p>
+
+<h2>EXIT STATUS
+<a name="EXIT STATUS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>ampctl</b>
+exits with:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>0</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if all operations completed normally;</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>1</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if there was an invalid command line option or
+argument;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>2</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if an error was returned by <b>Hamlib</b>.</p></td></tr>
+</table>
+
+<h2>EXAMPLES
+<a name="EXAMPLES"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>ampctl</b> for am Elecraft KPA-1500 using a USB to serial
+adapter on Linux in interactive mode:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>ampctl -m
+201 -r /dev/ttyUSB1</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Start
+<b>ampctl</b> for an Elecraft KPA-1500 using COM1 on MS
+Windows while generating TRACE output to <i>stderr</i>:</p>
+
+<p style="margin-left:17%; margin-top: 1em">&gt; <b>ampctl
+-m 201 -r COM1 -vvvvv</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Connect to a
+running <b>ampctld</b> with amplifier model 2 (&ldquo;NET
+ampctl&rdquo;) on the local host and specifying the TCP
+port, setting frequency and mode:</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>ampctl -m
+2 -r localhost:4531 F 7253500</b></p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This almost
+empty section...</p>
+
+<p style="margin-left:11%; margin-top: 1em">Report bugs
+to:</p>
+
+
+<p style="margin-left:22%;"><a href="mailto:hamlib-developer@lists.sourceforge.net">Hamlib
+Developer mailing list </a></p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio, rotator, and amplifier control functions
+for developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2000-2011 Stephane Fillod <br>
+Copyright &copy; 2000-2018 the Hamlib Group (various
+contributors) <br>
+Copyright &copy; 2010-2020 Nate Bargmann</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>less</b>(1),
+<b>more</b>(1), <b>ampctld</b>(1), <b>hamlib</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>

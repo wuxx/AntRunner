@@ -1,0 +1,37 @@
+
+This file lists people who contributed indirectly to Hamlib, by generously
+making information available. Be they thanked for their openness.
+
+
+WiNRADiO backend
+----------------
+
+* Harish Pillay 9v1hp and Pascal Brisset and their excellent LiNRADiO project.
+  URL: http://linradio.sourceforge.net/
+
+Icom CI-V backend
+-----------------
+
+* Ekki Plicht DF4OR <ekki@plicht.de> and his excellent web site on
+	the CI-V interface.
+	URL: http://www.plicht.de/ekki/civ/
+
+* Karl Kramer DG8FZ <Karl_Kramer@bigfoot.com> for his V24/CI-V cable
+	and his CSMA/CD explanation of the bus.
+	URL: http://KarlKramer.de/ ... x71ci_v.htm
+
+* Simon Collings, RS-232 Interfacing for Receiver Control
+    URL: http://www.scnt01426.pwp.blueyonder.co.uk/Articles/RS-232/RS-232.htm
+
+* Kai Altenfelder <ka@suse.de> for supporting us and providing documentation
+
+Icom PCR backend
+----------------
+
+* Ghetto's team, PCR-1000 ICOM receiver
+	URL: http://www.philtered.net/icomlib.phtml
+
+Other Assistance
+----------------
+
+* Special thanks to Ed Hare, W1RFI, and the American Radio Relay League for technical support.

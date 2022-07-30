@@ -1,0 +1,405 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Wed May 18 09:31:52 2022 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>RIGSMTR</title>
+
+</head>
+<body>
+
+<h1 align="center">RIGSMTR</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="#EXIT STATUS">EXIT STATUS</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#BUGS">BUGS</a><br>
+<a href="#COPYING">COPYING</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#COLOPHON">COLOPHON</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">rigsmtr -
+measure S-Meter vs azimuth using Hamlib</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="11%">
+
+
+<p style="margin-top: 1em"><b>rigsmtr</b></p></td>
+<td width="1%"></td>
+<td width="77%">
+
+
+<p style="margin-top: 1em">[<b>-hvV</b>]
+[<b>-m&nbsp;</b><i>id</i>] [<b>-r&nbsp;</b><i>device</i>]
+[<b>-s&nbsp;</b><i>baud</i>] [<b>-c&nbsp;</b><i>id</i>]
+[<b>-C&nbsp;</b><i>parm=val</i>] [<b>-M&nbsp;</b><i>id</i>]
+[<b>-R&nbsp;</b><i>device</i>] [<b>-S&nbsp;</b><i>baud</i>]
+[<b>-N&nbsp;</b><i>parm=val</i>] [<i>time_step</i>]</p></td></tr>
+</table>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigsmtr</b>
+uses <b>Hamlib</b> to control a radio to measure S-Meter
+value versus antenna azimuth.</p>
+
+<p style="margin-left:11%; margin-top: 1em">It rotates the
+antenna from minimum azimuth to maximum azimuth. Every
+second, or <i>time_step</i> if specified in seconds, it
+retrieves the signal strength. Azimuth in degrees and the
+corresponding S-Meter level in dB relative to S9 are then
+printed on <b>stdout</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">To work
+correctly, rigsmtr needs a radio that could measure S-Meter
+and a Hamlib backend that is able to retrieve it, connected
+to a Hamlib supported rotator.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Keep in mind
+that Hamlib is BETA level software. While a lot of backend
+libraries lack complete radio support, the basic functions
+are usually well supported.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Please report
+bugs and provide feedback at the e-mail address given in the
+<b>BUGS</b> section below. Patches and code enhancements
+sent to the same address are welcome.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This program
+follows the usual GNU command line syntax. Short options
+that take an argument may have the value follow immediately
+or be separated by a space. Long options starting with two
+dashes (&rsquo;-&rsquo;) require an &rsquo;=&rsquo; between
+the option and any argument.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is a
+summary of the supported options. <b><br>
+-m</b>, <b>--model</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Select radio model number.</p>
+
+<p style="margin-left:22%; margin-top: 1em">See model list
+(use &ldquo;rigctl -l&rdquo;).</p>
+
+<p style="margin-left:11%;"><b>-r</b>,
+<b>--rig-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the radio.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:11%;"><b>-s</b>,
+<b>--serial-speed</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set radio serial speed to
+<i>baud</i> rate.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from radio backend capabilities as the
+default.</p>
+
+<p style="margin-left:11%;"><b>-c</b>,
+<b>--civaddr</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Use <i>id</i> as the CI-V
+address to communicate with the radio.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Only useful for
+Icom and some Ten-Tec radios.</p>
+
+<p style="margin-left:22%; margin-top: 1em"><b>Note</b>:
+The <i>id</i> is in decimal notation, unless prefixed by
+<i>0x</i>, in which case it is hexadecimal.</p>
+
+<p style="margin-left:11%;"><b>-C</b>,
+<b>--set-conf</b>=<i>parm=val</i>[<i>,parm=val</i>]</p>
+
+<p style="margin-left:22%;">Set radio configuration
+parameter(s), e.g. <i>stop_bits=2</i>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use the
+<b>-L</b> option of <b>rigctl</b> for a list of
+configuration parameters for a given model number.</p>
+
+<p style="margin-left:11%;"><b>-M</b>,
+<b>--rot-model</b>=<i>id</i></p>
+
+<p style="margin-left:22%;">Select rotator model
+number.</p>
+
+<p style="margin-left:22%; margin-top: 1em">See model list
+(use &ldquo;rotctl -l&rdquo;).</p>
+
+<p style="margin-left:11%;"><b>-R</b>,
+<b>--rot-file</b>=<i>device</i></p>
+
+<p style="margin-left:22%;">Use <i>device</i> as the file
+name of the port connected to the rotator.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Often a serial
+port, but could be a USB to serial adapter. Typically
+<i>/dev/ttyS0</i>, <i>/dev/ttyS1</i>, <i>/dev/ttyUSB0</i>,
+etc. on Linux, <i>COM1</i>, <i>COM2</i>, etc. on MS Windows.
+The BSD flavors and Mac OS/X have their own designations.
+See your system&rsquo;s documentation.</p>
+
+<p style="margin-left:11%;"><b>-S</b>,
+<b>--rot-serial-speed</b>=<i>baud</i></p>
+
+<p style="margin-left:22%;">Set rotator serial speed to
+<i>baud</i> rate.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Uses maximum
+serial speed from rotator backend capabilities as the
+default.</p>
+
+<p style="margin-left:11%;"><b>-N</b>,
+<b>--rot-set-conf</b>=<i>parm=val</i>[<i>,parm=val</i>]</p>
+
+<p style="margin-left:22%;">Set rotator configuration
+parameter(s), e.g. <i>stop_bits=2</i>.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Use the
+<b>-L</b> option of <b>rotctl</b> for a list of
+configuration parameters for a given model number.</p>
+
+<p style="margin-left:11%;"><b>-v</b>, <b>--verbose</b></p>
+
+<p style="margin-left:22%;">Set verbose mode, cumulative
+(see <b>DIAGNOSTICS</b> below).</p>
+
+<p style="margin-left:11%;"><b>-h</b>, <b>--help</b></p>
+
+<p style="margin-left:22%;">Show a summary of these options
+and exit.</p>
+
+<p style="margin-left:11%;"><b>-V</b>, <b>--version</b></p>
+
+<p style="margin-left:22%;">Show version of <b>rigsmtr</b>
+and exit.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note</b>:
+Some options may not be implemented by a given backend and
+will return an error. This is most likely to occur with the
+<b>--set-conf</b> and <b>--rot-set-conf</b> options.</p>
+
+<h2>DIAGNOSTICS
+<a name="DIAGNOSTICS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>-v</b>,
+<b>--verbose</b> option allows different levels of
+diagnostics to be output to <b>stderr</b> and correspond to
+-v for <b>BUG</b>, -vv for <b>ERR</b>, -vvv for <b>WARN</b>,
+-vvvv for <b>VERBOSE</b>, or -vvvvv for <b>TRACE</b>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A given verbose
+level is useful for providing needed debugging information
+to the email address below. For example, TRACE output shows
+all of the values sent to and received from the radio which
+is very useful for radio backend library development and may
+be requested by the developers.</p>
+
+<h2>EXIT STATUS
+<a name="EXIT STATUS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>rigsmtr</b>
+exits with:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>0</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if all operations completed normally;</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>1</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if there was an invalid command line option or
+argument;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>2</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if an error was returned by <b>Hamlib</b>;</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p><b>3</b></p></td>
+<td width="10%"></td>
+<td width="78%">
+
+
+<p>if the radio doesn&rsquo;t have the required
+capabilities.</p> </td></tr>
+</table>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Collect S-Meter
+readings on a TS-850 while an EasycommII rotator makes a
+full 360&deg; rotation and record measurements in the file
+<i>csmtr</i> (typed text shown in bold):</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>rigsmtr -m
+2009 -r /dev/ttyS1 -M 202 &gt; csmtr</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">After
+completion the file <i>csmtr</i> contains lines such as:</p>
+
+<p style="margin-left:17%; margin-top: 1em">0 -47 <br>
+30 -40 <br>
+60 -22 <br>
+90 -3 <br>
+120 10 <br>
+150 1 <br>
+180 -11 <br>
+210 -24 <br>
+240 -35 <br>
+270 -42 <br>
+300 -48 <br>
+330 -51 <br>
+360 -49</p>
+
+<p style="margin-left:11%; margin-top: 1em">The results can
+be plotted with <b>gnuplot</b>(1):</p>
+
+<p style="margin-left:17%; margin-top: 1em">$ <b>gnuplot
+<br>
+set angles degrees <br>
+set polar <br>
+set grid polar 15. <br>
+unset border <br>
+unset param <br>
+set style data line <br>
+set rrange [-60:60] <br>
+set xrange [-60:60] <br>
+set yrange [-60:60] <br>
+plot csmtr</b></p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Report bugs
+to:</p>
+
+
+<p style="margin-left:22%;"><a href="mailto:hamlib-developer@lists.sourceforge.net">Hamlib
+Developer mailing list </a></p>
+
+<h2>COPYING
+<a name="COPYING"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This file is
+part of Hamlib, a project to develop a library that
+simplifies radio, rotator, and amplifier control functions
+for developers of software primarily of interest to radio
+amateurs and those interested in radio communications.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Copyright
+&copy; 2007-2009 Stephane Fillod <br>
+Copyright &copy; 2018-2020 Nate Bargmann</p>
+
+<p style="margin-left:11%; margin-top: 1em">This is free
+software; see the file COPYING for copying conditions. There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>gnuplot</b>(1),
+<b>rigctl</b>(1), <b>rotctl</b>(1), <b>hamlib</b>(7)</p>
+
+<h2>COLOPHON
+<a name="COLOPHON"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Links to the
+Hamlib Wiki, Git repository, release archives, and daily
+snapshot archives are available via
+<a href="http://www.hamlib.org">hamlib.org</a>.</p>
+<hr>
+</body>
+</html>
