@@ -34,7 +34,10 @@ AntRunner是MuseLab设计实现的便携式天线旋转器，支持360度方位�
 rotctld.exe -vvvvv -m 2401 -r COMx
 ```
 将COMx修改成设备管理器中出现的实际串口号即可，保存脚本，双击运行即可。
-![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-4.png)
+![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-1.png)
+![AntRunner-2](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-2.png)
+![AntRunner-3](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-3.png)
+![AntRunner-4](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-4.png)
 
 #### 启动Gpredict
 双击gpredict.exe，即可打开Gpredict程序
