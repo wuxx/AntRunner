@@ -1,78 +1,81 @@
-# AntRunner 天线旋转器
- * [介绍](#介绍)
- * [特性](#特性)
- * [使用教程](#使用教程)
- * [系统原理说明](#系统原理说明)
- * [参考](#参考)
+# AntRunner Antenna rotator
+ * [Introduce](#introduce)
+ * [Feature](#feature)
+ * [How to Use](#how-to-use)
+ * [System Detail](#system-detail)
+ * [Rerfeence](#reference)
 
-## 介绍
-AntRunner是MuseLab设计实现的便携式天线旋转器，支持360度方位角和180度俯仰角的控制，可承重最大5KG的天线，支持平台 Windows/Linux/Mac/RaspberryPi/Android，配合对应的开源上位机可实现卫星的实时自动指向跟踪，支持有线（串口）与无线（ Wifi 2.4G）2种控制方式，支持多种规格的天线（一般为八木天线），安装方便。使用12V电池供电，可利用充电宝+12V快充诱骗线直接供电，整体重量较轻，便于携带，精心设计的多种功能，更方便各位HAM在野外的架台使用。
+## Introduce
+AntRunner is a portable antenna rotator designed by MuseLab. It supports 360-degree azimuth and 180-degree elevation control, and can support antennas up to 5KG. supports Windows/Linux/Mac/RaspberryPi/Android. Real-time automatic pointing and tracking of satellites, support wired (serial port) and wireless (Wifi 2.4G) control, support various specifications of antennas (usually Yagi antennas), easy to install. Powered by 12V battery, you can use the power bank + 12V fast charging decoy line to supply power directly, the overall weight is light, easy to carry, and the carefully designed various functions are very convenient for work outdoor.
 
 ![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/1.jpg)
 ![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/2.jpg)
 
-## 特性
-- 方位角和仰角全角度跟踪
-- 支持平台 Windows/Linux/RaspberryPi/Android
-- 支持有线串口控制
-- 支持无线WiFi 2.4G 控制
-- 12V电源供电，方便野外架设
-- 拆装方便
+## Feature
+- full Azimuth and elevation angle tracking
+- Supported Windows/Linux/RaspberryPi/Android
+- Support wired serial port control
+- Support wireless WiFi 2.4G control
+- 12V power supply, convenient for field erection
+- Easy to disassemble
 
-## 使用教程
+## How to Use
 
 ### Windows
 
-#### 旋转器调整
-上电之前需要将旋转器的方位角调整到正北方(方位角0度)，俯仰调整为水平(俯仰角0度)，此步骤可通过手机指南针APP完成调整。
+#### 0 Antenna installation
+Install the antenna on the U-shaped bracket of the rotator through the U-shaped hoop, and pay attention to install it at the center of gravity of the antenna to make the operation more stable.
 
-#### 接线
-使用12V电源将旋转器上电，并通过TYPE-C线连接旋转器和PC，正常连接后设备管理器中会出现一个串口，如图所示
+#### 1 Rotator adjustment
+Before powering on, you need to adjust the azimuth of the rotator to true north (azimuth angle of 0 degrees), and the pitch to be horizontal (pitch angle of 0 degrees). This step can be adjusted through the mobile compass APP.
 
-#### 启动Hamlib
-进入Hamlib目录，目录中有一批处理脚本，由于串口编号为系统分配，不同系统编号有所不同，故需要使用文本编辑器手动更改串口号再运行
+#### 2 Power up
+Use the 12V power supply to power on the rotator, and connect the rotator and PC through the TYPE-C cable. After the normal connection, a serial port will appear in the device manager, as shown in the figure.
+![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-1.png)
+
+#### 3 Start Hamlib
+Enter the Hamlib directory, there is a batch script in the directory, and the script is a command, as shown below, you need to manually edit the script to modify the serial port number. Since the serial port number is assigned by the system, the serial number is different for different systems, so you need to use a text editor to manually change the serial port number before running.
 ```
 rotctld.exe -vvvvv -m 2401 -r COMx
 ```
-将COMx修改成设备管理器中出现的实际串口号即可，保存脚本，双击运行即可。
-![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-1.png)
+Modify COMx to the actual serial port number that appears in the device manager, save the script, and double-click to run it.
 ![AntRunner-2](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-2.png)
 ![AntRunner-3](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-3.png)
 ![AntRunner-4](https://github.com/wuxx/AntRunner/blob/master/doc/AntRunner_Start-4.png)
 
-#### 启动Gpredict
-双击gpredict.exe，即可打开Gpredict程序
+#### 4 Start Gpredict
+Double-click gpredict.exe to open the Gpredict program
 
 ![Gpredict-1a](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-1a.png)
 
-##### 经纬度配置
-首先需要配置你所在的地区的经纬度，选择 Edit -> General -> Ground Stations -> Add new，在出来的页面中配置好自己当地的经纬度、高度即可。
+##### 4.1 Longitude and latitude configuration
+First, you need to configure the latitude and longitude of your region, select Edit -> General -> Ground Stations -> Add new, and configure your local latitude, longitude and altitude on the page that comes out.
 ![Gpredict-1c](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-1c.png)
 
-##### 卫星配置
-需要将欲跟踪的卫星添加至列表中，点击右上方的倒三角，选择 Configure, 在出现中的窗口中将欲跟踪卫星添加至右侧小窗口内即可
+##### 4.2 Satellite configuration
+You need to add the satellites you want to track to the list, click the inverted triangle on the upper right, select Configure, and add the satellites you want to track to the small window on the right in the window that appears.
 ![Gpredict-1b](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-1b.png)
 
 
-##### 旋转器配置
-新建一个旋转器配置，选择 Edit -> Interfaces -> Rotators -> Add New，并根据如图所示配置即可
+##### 4.3 Rotator configuration
+Create a new rotator device, select Edit -> Interfaces -> Rotators -> Add New, and configure it as shown
 ![Gpredict-1d](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-1d.png)
 
-##### 旋转器测试
-配置完旋转器之后，即可对旋转器进行初步的测试，点击右上方的倒三角，选择Antennna Control，即可进入旋转器控制页面
-Device选择grbltrk, 点击Engage初始化旋转器，然后即可配置方位角和俯仰角，配置完旋转器会即时响应，并会实时返回当前的角度值。
+##### 4.4 Rotator test
+After configuring the rotator device, you can perform a preliminary test on the rotator. Click the inverted triangle on the upper right and select Antenna Control to enter the antenna control page.
+select the newly created grbltrk, click Engage to initialize the rotator, and then configure the azimuth and pitch angles. After configuring the rotator, it will respond immediately and return the current angle value in real time.
 ![Gpredict-2b](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-2b.png)
 ![Gpredict-2c](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-2c.png)
 ![Gpredict-2d](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-2d.png)
 
-##### 卫星跟踪
-在Target中选择需要跟踪的卫星如ISS，点击Track，旋转器即会开始实时跟踪卫星，若卫星未入境，则会调整俯仰角为0度，方位角为卫星入境时的角度，等待卫星入境。
+##### 4.5 satellite tracking
+Select the satellite to be tracked in Target, such as ISS, click Track, the rotator will start tracking the satellite in real time, if the satellite is not in entry, it will adjust the pitch angle to 0 degrees, and the azimuth angle to the angle when the satellite enters, wait for the satellite to enter, The radar map on the left also shows the satellite's inbound trajectory and the current rotator position.
 ![Gpredict-2e](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-2e.png)
 ![Gpredict-3](https://github.com/wuxx/AntRunner/blob/master/doc/Gpredict-3.png)
 
-### 树莓派
-由于Linux下亦支持Gpredict，树莓派中可直接运行使用，操作步骤基本相同，在此不再赘述。
-Hamlib启动命令如下
+### Raspberry
+Since Gpredict is also supported under Linux, it can be directly run and used in the Raspberry Pi. The operation steps are basically the same, and will not be repeated here.
+here is how to start the Hamlib
 ```
 rotctld -vvvvv -m 2401 -r /dev/ttyUSB0
 ```
@@ -80,32 +83,29 @@ rotctld -vvvvv -m 2401 -r /dev/ttyUSB0
 
 ### Android
 #### Look4Sat 
-由于Android 不支持Hamlib，需要通过额外硬件系统转换 TODO
+TODO
 
-## 系统原理说明
-本节为技术原理细节描述，不感兴趣的朋友可直接忽略本节说明，直接前往实际操作章节使用。
+## System Detail
+This section is a detailed description of the technical principle. Those who are not interested can ignore the description in this section and go directly to the actual operation chapter.
 
-### 旋转器电机控制原理说明
-旋转控制器底层芯片使用ESP32，其上运行的固件为GRBL，这原本是一款开源的CNC控制固件，最早运行于ATmega328P芯片上（一款性能较为低端，主频仅为16MHz的单片机，SRAM容量为2KB，Flash存储容量为32KB），而ESP32则是乐鑫信息科技推出的一颗WiFi芯片。拥有40nm工艺、双核32位MCU、2.4GHz双模Wi-Fi和蓝牙芯片、主频高达240MHz，SRAM容量为520KB，Flash容量最高则可达16MB， 较高的性能，丰富的外设使得其可以支持更多更强的特性功能，故这里使用的是开源社区移植的GRBL版本：https://github.com/bdring/Grbl_Esp32。其不仅支持常规的串口控制，而且有一套完善的WEBUI，可通过WEBUI进行手动控制、配置，也可通过telnet 22端口实现网络控制。（当然，也可以构造HTTP请求从WEB 80端口实现控制），由于ESP32支持蓝牙，理论上也可通过蓝牙实现电机的控制，由于WiFi的通信更加具有普适性，通信的速度、稳定性也相对更好一些，且基于TCP/IP的软件协议栈使得通信也更加稳定可靠，故当前无线控制的实现基于WiFi实现。
-注1：GRBL系统的控制命令一般称之为gcode，是一种简单的指令系统，例如："G0, X0, Y5" 表明将当前位置移动到坐标[0mm, 5mm]处。
+### Rotator Motor Control 
+The bottom chip of the rotary controller uses ESP32, and the firmware running on it is GRBL, which was originally an open source CNC control firmware, and was first run on the ATmega328P chip (a low-end single-chip microcomputer with a main frequency of only 16MHz, SRAM The capacity is 2KB, and the Flash storage capacity is 32KB), while ESP32 is a WiFi chip launched by Espressif Information Technology. With 40nm process, dual-core 32-bit MCU, 2.4GHz dual-mode Wi-Fi and Bluetooth chip, the main frequency is up to 240MHz, the SRAM capacity is 520KB, and the Flash capacity is up to 16MB. It supports more and stronger features, so the [GRBL version] transplanted by the open source community is used here (https://github.com/bdring/Grbl_Esp32). It not only supports conventional serial port control, but also has a complete set of WEBUI, which can be manually controlled and configured through the WEBUI, and can also be controlled through the telnet 22 port. (Of course, an HTTP request can also be constructed to realize control from the WEB 80 port), since ESP32 supports Bluetooth, the motor control can also be achieved theoretically through Bluetooth. Since WiFi communication is more universal, the speed and stability of communication are also relatively high. Better, and the software protocol stack based on TCP/IP makes communication more stable and reliable, so the current implementation of wireless control is based on WiFi.
+Note 1: The control command of the GRBL system is generally called gcode, which is a simple command system. For example: "G0, X0, Y5" means to move the current position to the coordinates [0mm, 5mm].
 
-### Gpredict上位机说明
-Gpredict (https://github.com/csete/gpredict)为 Alexandru Csete （呼号为
-oz9aec）发起并主导的开源的实时卫星跟踪和轨道预报软件，它可以跟踪无限数量的卫星,并以列表,表格,地图,雷达等方式显示他们的位置和其他数据。它还可以通过一个卫星预测未来的时间, 并为您提供详细资料，另外它还可以对接多种常用的电台、SDR设备和多种的天线旋转器，AntRunner的主要使用场景即为和Gpredict配合实现实时的跟踪控制。
-由于其是基于GPL的开源项目，当前Gpredict仍然在社区的推动下不断的发展，相信后续会有更多的功能、更方便的特性实现。
+### Gpredict 
+Gpredict (https://github.com/csete/gpredict) is lead by Alexandru Csete (call sign oz9aec) is an open source real-time satellite tracking and orbit forecasting software that can track an unlimited number of satellites and display their positions and other data in lists, tables, maps, radars, etc. It can also predict the future time through a satellite and provide you with detailed information. In addition, it can connect to a variety of commonly used radio stations, SDR equipment and a variety of antenna rotators. The main use scenario of AntRunner is to cooperate with Gpredict. Real-time tracking control.
+Since it is an open source project based on GPL, Gpredict is still developing under the impetus of the community, and it is believed that more functions and more convenient features will be implemented in the future.
 
+### Hamlib 
+Hamlib (https://hamlib.github.io/) is a control library for radios and rotators based on the LGPL open source protocol, supporting Windows/Linux. Gpredict mentioned above can control various types of radio equipment and rotators. The above are all controlled by Hamlib. It can be understood that Hamlib is the middle layer between Gpredict and the actual hardware. Hamlib provides a unified control interface to Gpredict, and itself realizes the operation of complex hardware devices. In actual operation, Hamlib runs in the background as a separate task, which receives requests and sends responses through TCP port 4533. For example: Gpredict sends "p 30 60" through TCP port 4533, which means to adjust the current rotator azimuth to 30 degrees, the pitch angle is adjusted to 60 degrees, and the actual hardware operation is performed by Hamlib. Gpredict does not need to care what type of rotator is used, just specify the model of the rotator when Hamlib starts.
+Note: AntRunner's driver is implemented in Hamlib, and has been incorporated into the official Hamlib repository (https://github.com/Hamlib/Hamlib). Just take the latest version of Hamlib. Incorporation: https://github.com/Hamlib/Hamlib/pull/1032
 
-### Hamlib中间件说明
-Hamlib (https://hamlib.github.io/) 为基于LGPL开源协议的无线电和旋转器的控制库，支持Windows/Linux, 上面提到Gpredict可控制各种规格型号的无线电设备和旋转器，实际上都是通过Hamlib实现控制的，可以理解成Hamlib是Gpredict和实际的硬件的中间一层，Hamlib向Gpredict提供统一的控制接口，其自身则实现复杂的各类硬件设备的操作。在实际运行时，Hamlib为一个单独的任务运行在后台，其过TCP 4533端口接收请求并发送响应，例如：Gpredict通过4533 TCP端口发送“p 30 60”则意为将当前旋转器方位角调整为30度，俯仰角调整为60度，由Hamlib来进行实际的硬件操作，Gpredict并不需要关心使用的什么规格型号的旋转器，只需在Hamlib启动时候制定旋转器的型号即可。
-注：AntRunner的驱动即实现在Hamlib中，并已经合入到官方Hamlib仓库 (https://github.com/Hamlib/Hamlib)，取Hamlib 的最新版本即可。合入点：https://github.com/Hamlib/Hamlib/pull/1032
-
-### Look4Sat说明 
-Look4Sat (https://github.com/rt-bishop/Look4Sat) 为 Arty Bishop实现的基于Android的开源卫星跟踪软件，页面简洁使用，最新的提交也支持了旋转器的控制，其主要特色是在卫星跟踪过程中支持陀螺仪的实时显示，可以方便的对准卫星，目前其他同类卫星预测软件均不支持这种简洁的使用方式。
-Look4Sat对于旋转器的控制通过网络发送，例如"\set_pos 30.0 60.0" 表明将当前旋转器方位角调整为30度，俯仰角调整为60度。
-由于Android端当前并不支持Hamlib，所以通过Look4Sat控制需要一个额外的硬件设备，这里自己基于ESP32-C3设计了一个小系统，用于将网络请求转换成实际的GRBL命令发送给GRBL固件实现方位和俯仰的控制，其作用相当于自己实现了一个简单的"Hamlib"。
-
+### Look4Sat
+Look4Sat (https://github.com/rt-bishop/Look4Sat) is an Android-based open source satellite tracking software implemented by Arty Bishop. The page is concise and easy to use. The latest submission also supports the control of the rotator. The real-time display of the gyroscope is supported during the tracking process, which can easily align the satellite. At present, other similar satellite prediction software does not support this simple use method, and it is widely used in the current HAM.
+Look4Sat's control of the spinner is sent over the network, for example "\set_pos 30.0 60.0" means to adjust the current spinner azimuth to 30 degrees and pitch to 60 degrees.
+Since Hamlib is not currently supported on the Android side, an additional hardware device is required to control through Look4Sat. Here, I designed a small system based on ESP32-C3 to convert network requests into actual GRBL commands and send them to the GRBL firmware to achieve orientation and The control of pitch is equivalent to implementing a simple "Hamlib" by itself.
 
 ### SDR#
-SDR# 是目前流行的SDR控制上位机，使用简单方便，支持多种常见的SDR设备，支持多种插件功能，可以和Gpredict实现联动，同时Gpredict又可支持控制无线设备和旋转器，故可以实现：使用SDR设备例如RTL-SDR，同时用Gpredict跟踪卫星，gpredict可以通过SDR#中的对应插件向SDR#发送多普勒频率进行实时调整，同时Gpredict又可实时的控制旋转器进行跟踪。SDR#中的其他插件则可以对接收到的信号波形进行分析、录制等，实现全系统的联动。
+SDR# is a popular SDR control application. It is simple and convenient to use. It supports a variety of common SDR devices, supports a variety of plug-in functions, and can be linked with Gpredict. At the same time, Gpredict can also support wireless devices and rotators. : Use SDR equipment such as RTL-SDR, and use Gpredict to track satellites at the same time, gpredict can send Doppler frequency to SDR# through the corresponding plug-in in SDR# for real-time adjustment, and Gpredict can control the rotator in real time for tracking. Other plug-ins in SDR# can analyze and record the received signal waveform to realize the linkage of the whole system.
 
-## 参考
+## Reference
