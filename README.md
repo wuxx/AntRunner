@@ -1,4 +1,6 @@
-# AntRunner Antenna rotator
+# AntRunner
+--------
+[中文](./README_cn.md)
  * [Introduce](#introduce)
  * [Feature](#feature)
  * [How to Use](#how-to-use)
@@ -9,7 +11,8 @@
 AntRunner is a portable antenna rotator designed by MuseLab. It supports 360-degree azimuth and 180-degree elevation control, and can support antennas up to 5KG. supports Windows/Linux/Mac/RaspberryPi/Android. Real-time automatic pointing and tracking of satellites, support wired (serial port) and wireless (Wifi 2.4G) control, support various specifications of antennas (usually Yagi antennas), easy to install. Powered by 12V battery, you can use the power bank + 12V fast charging decoy line to supply power directly, the overall weight is light, easy to carry, and the carefully designed various functions are very convenient for work outdoor.
 
 ![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/1.jpg)
-![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/2.jpg)
+![AntRunner-2](https://github.com/wuxx/AntRunner/blob/master/doc/3.jpg)
+![AntRunner-3](https://github.com/wuxx/AntRunner/blob/master/doc/2.jpg)
 
 ## Feature
 - full Azimuth and elevation angle tracking
