@@ -1,10 +1,10 @@
 # AntRunner
---------
 [中文](./README_cn.md)
  * [Introduce](#introduce)
  * [Feature](#feature)
  * [How to Use](#how-to-use)
  * [System Detail](#system-detail)
+ * [How to Get One](#how-to-get-one)
  * [Rerfeence](#reference)
 
 ## Introduce
@@ -110,5 +110,8 @@ Since Hamlib is not currently supported on the Android side, an additional hardw
 
 ### SDR#
 SDR# is a popular SDR control application. It is simple and convenient to use. It supports a variety of common SDR devices, supports a variety of plug-in functions, and can be linked with Gpredict. At the same time, Gpredict can also support wireless devices and rotators. : Use SDR equipment such as RTL-SDR, and use Gpredict to track satellites at the same time, gpredict can send Doppler frequency to SDR# through the corresponding plug-in in SDR# for real-time adjustment, and Gpredict can control the rotator in real time for tracking. Other plug-ins in SDR# can analyze and record the received signal waveform to realize the linkage of the whole system.
+
+### How to Get One
+I may make some AntRunner prototypes and put them on my tindie store (https://www.tindie.com/stores/johnnywu/) for somebody interested, please follow my tindie shop or star this repo.
 
 ## Reference
