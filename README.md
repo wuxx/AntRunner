@@ -2,6 +2,7 @@
 [中文](./README_cn.md)
  * [Introduce](#introduce)
  * [Feature](#feature)
+ * [Specification](#specification)
  * [How to Use](#how-to-use)
  * [System Detail](#system-detail)
  * [How to Get One](#how-to-get-one)
@@ -21,6 +22,13 @@ AntRunner is a portable antenna rotator designed by MuseLab. It supports 360-deg
 - Support wireless WiFi 2.4G control
 - 12V power supply, convenient for field erection
 - Easy to disassemble
+
+## Specification
+- Rotation Limit: AZ: 0 - 360; EL: 0-180
+- Max Load: 10KG
+- Backlash: AZ:1° EL:1°
+- Weight: 3.5KG
+- Rotator Diameter x Height:  120mmØ x 65mm (H)
 
 ## How to Use
 
