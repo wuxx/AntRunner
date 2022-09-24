@@ -5,6 +5,10 @@
  * [Specification](#specification)
  * [How to Use](#how-to-use)
  * [System Detail](#system-detail)
+    * [Gpredict](#gpredict)
+    * [Hamlib](#hamlib)
+    * [Look4Sat](#look4sat)
+    * [SDR#](#sdr)
  * [How to Get One](#how-to-get-one)
  * [Rerfeence](#reference)
 
@@ -24,7 +28,7 @@ AntRunner is a portable antenna rotator designed by MuseLab. It supports 360-deg
 - Easy to disassemble
 
 ## Specification
-- Rotation Limit: AZ: 0 - 360; EL: 0-180
+- Rotation Limit: AZ: 0 - 360°; EL: 0-180°
 - Max Load: 10KG
 - Backlash: AZ:1° EL:1°
 - Weight: 3.5KG
@@ -123,3 +127,7 @@ SDR# is a popular SDR control application. It is simple and convenient to use. I
 I may make some AntRunner prototypes and put them on my tindie store (https://www.tindie.com/stores/johnnywu/) for somebody interested, please follow my tindie shop or star this repo.
 
 ## Reference
+- Gpredict (https://github.com/csete/gpredict) 
+- Hamlib (https://hamlib.github.io/)
+- Look4Sat (https://github.com/rt-bishop/Look4Sat)
+- sdr# (https://airspy.com/download/)
