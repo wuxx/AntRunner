@@ -13,7 +13,7 @@
  * [Rerfeence](#reference)
 
 ## Introduce
-AntRunner is a portable antenna rotator designed by MuseLab. It supports 360-degree azimuth and 180-degree elevation control, and can support antennas up to 5KG. supports Windows/Linux/Mac/RaspberryPi/Android. Real-time automatic pointing and tracking of satellites, support wired (serial port) and wireless (Wifi 2.4G) control, support various specifications of antennas (usually Yagi antennas), easy to install. Powered by 12V battery, you can use the power bank + 12V fast charging decoy line to supply power directly, the overall weight is light, easy to carry, and the carefully designed various functions are very convenient for work outdoor.
+AntRunner is a portable antenna rotator designed and made by Muse Lab. It can be used for real-time automatic racking of satellites with corresponding open source software which is available on Windows/Linux/Mac/RaspberryPi/Android. The rotator and the host computer can communicate via wired (serial port) or wireless (Wifi 2.4G).  It can install various types of antennas (usually Yagi antennas), support 360-degree azimuth and 180-degree elevation control, and can support antennas up to 5KG.  It can be powered by a 12V battery or by a fast charging power bank with a 12V fast charging trigger cable. It’s easy to carry as its weight is relatively light and very convenient to use in the wild for HAM.
 
 ![AntRunner-1](https://github.com/wuxx/AntRunner/blob/master/doc/1.jpg)
 ![AntRunner-2](https://github.com/wuxx/AntRunner/blob/master/doc/3.jpg)
@@ -125,7 +125,7 @@ Since Hamlib is not currently supported on the Android side, an additional hardw
 SDR# is a popular SDR control application. It is simple and convenient to use. It supports a variety of common SDR devices, supports a variety of plug-in functions, and can be linked with Gpredict. At the same time, Gpredict can also support wireless devices and rotators. : Use SDR equipment such as RTL-SDR, and use Gpredict to track satellites at the same time, gpredict can send Doppler frequency to SDR# through the corresponding plug-in in SDR# for real-time adjustment, and Gpredict can control the rotator in real time for tracking. Other plug-ins in SDR# can analyze and record the received signal waveform to realize the linkage of the whole system.
 
 ### How to Get One
-I may make some AntRunner prototypes and put them on my tindie store (https://www.tindie.com/stores/johnnywu/) for somebody interested, please follow my tindie shop or star this repo.
+Some guys ask me if they could buy AntRunner rotator, so I plan to make some AntRunner prototypes. Interested friends can place an order in my tindie store: https://www.tindie.com/products/johnnywu/the-antrunner-rotator/
 
 ## Reference
 - Gpredict (https://github.com/csete/gpredict) 
