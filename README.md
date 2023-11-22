@@ -10,7 +10,7 @@
     * [Look4Sat](#look4sat)
     * [SDR#](#sdr)
  * [How to Get One](#how-to-get-one)
- * [Rerfeence](#reference)
+ * [Reference](#reference)
 
 ## Introduce
 AntRunner is a portable antenna rotator designed and made by Muse Lab. It can be used for real-time automatic racking of satellites with corresponding open source software which is available on Windows/Linux/Mac/RaspberryPi/Android. The rotator and the host computer can communicate via wired (serial port) or wireless (Wifi 2.4G).  It can install various types of antennas (usually Yagi antennas), support 360-degree azimuth and 180-degree elevation control, and can support antennas up to 5KG.  It can be powered by a 12V battery or by a fast charging power bank with a 12V fast charging trigger cable. It’s easy to carry as its weight is relatively light and very convenient to use in the wild for HAM.
@@ -99,7 +99,7 @@ rotctld -vvvvv -m 2401 -r /dev/ttyUSB0
 
 ### Android
 #### Look4Sat 
-TODO
+Look4Sat wireless control is currently supported, please refer to this repo [Look4Sat-AntRunner-Controller](https://github.com/wuxx/Look4Sat-AntRunner-Controller)
 
 ## System Detail
 This section is a detailed description of the technical principle. Those who are not interested can ignore the description in this section and go directly to the actual operation chapter.
@@ -138,10 +138,11 @@ Since Hamlib is not currently supported on the Android side, an additional hardw
 SDR# is a popular SDR control application. It is simple and convenient to use. It supports a variety of common SDR devices, supports a variety of plug-in functions, and can be linked with Gpredict. At the same time, Gpredict can also support wireless devices and rotators. : Use SDR equipment such as RTL-SDR, and use Gpredict to track satellites at the same time, gpredict can send Doppler frequency to SDR# through the corresponding plug-in in SDR# for real-time adjustment, and Gpredict can control the rotator in real time for tracking. Other plug-ins in SDR# can analyze and record the received signal waveform to realize the linkage of the whole system.
 
 ### How to Get One
-Some guys ask me if they could buy AntRunner rotator, so I plan to make some AntRunner prototypes. Interested friends can place an order in my tindie store: https://www.tindie.com/products/johnnywu/the-antrunner-rotator/
+Some guys ask me if they could buy AntRunner rotator, so I made some AntRunner prototypes. Interested friends can place an order in my tindie store: https://www.tindie.com/products/johnnywu/the-antrunner-rotator/
 
 ## Reference
 - Gpredict (https://github.com/csete/gpredict) 
 - Hamlib (https://hamlib.github.io/)
 - Look4Sat (https://github.com/rt-bishop/Look4Sat)
 - sdr# (https://airspy.com/download/)
+- Look4Sat-AntRunner-Controller (https://github.com/wuxx/Look4Sat-AntRunner-Controller)
